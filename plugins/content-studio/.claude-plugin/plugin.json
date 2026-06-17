@@ -1,7 +1,7 @@
 {
   "name": "content-studio",
   "displayName": "Content Studio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An AI content studio for Claude Code: plan, research, draft, review, and publish content (SEO articles, long-form fiction, kids' stories, YouTube/Xiaohongshu/short-drama scripts, and more) through deterministic, zero-dependency gates that refuse to ship keyword-stuffed, fabricated, or non-compliant content.",
   "author": {
     "name": "tsgx1990",

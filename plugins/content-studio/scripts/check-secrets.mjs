@@ -11,29 +11,21 @@
  * Reports `file:line — <label>` and **REDACTS the value** (a secret is never printed to the terminal
  * or logs). Exit 0 = clean. Exit 1 = secret(s) found. Exit 2 = usage.
  */
-import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
-import { join, relative, extname } from "node:path";
-import { SECRET_PATTERNS } from "./lib/secret-patterns.mjs";
-
-// text formats only — binaries can't be line-scanned meaningfully and aren't where secrets get pasted
-const TEXT = new Set([".md", ".mjs", ".js", ".cjs", ".json", ".jsonl", ".txt", ".yaml", ".yml", ".csv", ".html", ".svg", ".env"]);
+import { readFileSync } from "node:fs";
+import { relative } from "node:path";
+import { walk, isText } from "./lib/fs.mjs";
+import { scanForSecrets } from "./lib/secret-patterns.mjs";
 
 const args = process.argv.slice(2);
 if (!args.length) { console.error("usage: node scripts/check-secrets.mjs <path|dir ...>"); process.exit(2); }
 
-function walk(p) {
-  if (!existsSync(p)) return [];
-  if (statSync(p).isDirectory()) return readdirSync(p).flatMap((n) => walk(join(p, n)));
-  return [p];
-}
-
-const files = args.flatMap(walk).filter((f) => TEXT.has(extname(f).toLowerCase()));
+const files = args.flatMap(walk).filter(isText);
 let found = 0;
 for (const f of files) {
   const lines = readFileSync(f, "utf8").split("\n");
   lines.forEach((line, i) => {
-    for (const [re, label] of SECRET_PATTERNS) {
-      if (re.test(line)) { found++; console.error(`✖ ${relative(process.cwd(), f)}:${i + 1} — ${label} (redacted)`); }
+    for (const label of scanForSecrets(line)) {
+      found++; console.error(`✖ ${relative(process.cwd(), f)}:${i + 1} — ${label} (redacted)`);
     }
   });
 }
