@@ -105,6 +105,7 @@ node "${CLAUDE_PLUGIN_ROOT}"/scripts/render.mjs <source.json> [--write]     # re
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-freshness.mjs <file> [--current-year=N]  # year-stamped data gate: warn if stale; block if a cited 分数≈位次万 drifts off its *.data.json source
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-batch.mjs <path|dir ...> [--json]  # scoped readiness triage for N pieces: per-file publish/schema/per-type-gate/ai-tells/freshness rollup (reviewing a batch)
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/validate-sidecar.mjs <sidecar.json>    # validate a sidecar against its schema
+node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-secrets.mjs <path|dir ...>       # scan for committed secrets (reuses lib/secret-patterns; also run by check.mjs over projects/+config/)
 ```
 
 `check.mjs` is the one "is the repo healthy?" command — every sidecar validated, the publish gate run

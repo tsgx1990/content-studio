@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Content Studio — an AI content pipeline (skills + agents + deterministic gates) for Claude Code.",
-    "version": "0.1.2"
+    "version": "0.2.0"
   },
   "plugins": [
     {

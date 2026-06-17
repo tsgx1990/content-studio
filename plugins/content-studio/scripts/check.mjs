@@ -165,9 +165,25 @@ for (const { suffix, script, section } of GATE_BY_SUFFIX) {
   }
 }
 
+// 2k. no committed secrets under the content root (projects/ + config/) ---------
+//     A secret pasted into ANY file (a sidecar, project.yaml, a research note, a CSV) should fail
+//     repo health — not only the publish gate on a drafted article. Reuses the shared secret lexicon.
+{
+  const targets = [resolve(CONTENT_ROOT, "projects"), resolve(CONTENT_ROOT, "config")].filter(existsSync);
+  if (targets.length) {
+    console.log("secrets:");
+    try {
+      execFileSync("node", [resolve(SCRIPTS, "check-secrets.mjs"), ...targets], { stdio: "pipe" });
+      ok("no secrets in content");
+    } catch (e) {
+      bad(`secret(s) found:\n${(e.stderr || e.stdout || "").toString().trim().split("\n").map((l) => "      " + l).join("\n")}`);
+    }
+  }
+}
+
 // 3. fixture self-tests --------------------------------------------------------
 console.log("self-tests:");
-for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs"]) {
+for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs"]) {
   try {
     execFileSync("node", [resolve(SCRIPTS, t)], { stdio: "pipe" });
     ok(t);
