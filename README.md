@@ -80,6 +80,8 @@ resolve the plugin path for you:
 /content-studio:cs-gate check-prepublish.mjs <content.md> # any gate, by name, with args
 ```
 
+Full gate reference and how path resolution works: [`plugins/content-studio/docs/running-gates.md`](plugins/content-studio/docs/running-gates.md).
+
 ## Set up a content workspace
 
 1. Copy `plugins/content-studio/.env.example` to `.env` and `plugins/content-studio/config/publish.json.example`
