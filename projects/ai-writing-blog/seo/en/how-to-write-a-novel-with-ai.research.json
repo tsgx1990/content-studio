@@ -1,0 +1,88 @@
+{
+  "primary_keyword": "how to write a novel with AI",
+  "language": "en",
+  "source": "web-search",
+  "data_quality": "estimated",
+  "researched_at": "2026-06-08T02:30:00Z",
+  "search_volume": null,
+  "difficulty": "high",
+  "search_intent": "informational",
+  "serp_snapshot": [
+    {
+      "title": "How to Write a Novel with AI (Sudowrite blog)",
+      "url": "https://sudowrite.com/blog/how-to-write-a-novel-with-ai/",
+      "format": "how-to",
+      "notes": "Vendor blog, high authority. Solid generic frame (what/why/how it works, step-by-step, best practices, mistakes, FAQ) but funnels everything to Sudowrite. Tool-led, not tool-agnostic."
+    },
+    {
+      "title": "How to Use AI to Write a Novel: Tools, Workflow & Best Practices (2026) (Infinite Library)",
+      "url": "https://www.infinitelibrary.ai/guides/how-to-use-ai-to-write-a-novel",
+      "format": "how-to",
+      "notes": "Strong 'AI is a collaborator, not a replacement' framing (vision/voice stay human; AI handles first-draft + consistency). Also a vendor guide. The best of the editorial competitors on stance."
+    },
+    {
+      "title": "How to Write a Novel With ChatGPT: My 6 Step Process (StorytellingDB)",
+      "url": "https://storytellingdb.com/write-a-novel-with-chatgpt/",
+      "format": "how-to",
+      "notes": "Concrete 6-step ChatGPT prompt walkthrough (pitch -> synopsis -> outline -> chapter outline -> chapter summaries -> chapter writing). ChatGPT-only; copy-paste prompts. No voice/legal coverage."
+    },
+    {
+      "title": "How to Write a Novel with AI: A Complete Guide (2026) (Novarrium)",
+      "url": "https://novarrium.com/how-to-write-a-novel-with-ai",
+      "format": "how-to",
+      "notes": "Claims premise->published coverage incl. worldbuilding, consistency, voice preservation. Direct editorial competitor on the same long-tail."
+    },
+    {
+      "title": "How to Write a Book Using AI: The Ultimate Guide (Voicenotes)",
+      "url": "https://voicenotes.com/blog/write-book-with-with-ai",
+      "format": "how-to",
+      "notes": "Book (not novel-specific) step-by-step, tilted to the Voicenotes dictation tool. 'Book' intent overlaps but skews nonfiction."
+    },
+    {
+      "title": "AI Best Practices for Authors (The Authors Guild)",
+      "url": "https://authorsguild.org/resource/ai-best-practices-for-authors/",
+      "format": "how-to",
+      "notes": "High-authority industry body. Disclosure, ethics, and the copyrightability rule (AI-generated text is filtered out; human authorship must carry the work). The credible source for the legal/ethics section."
+    },
+    {
+      "title": "AI Novel Writer / AI Novel Generator (Squibler, type.ai, novelistAI, NovelCrafter)",
+      "url": "https://www.squibler.io/ai-novel-writer/",
+      "format": "product",
+      "notes": "A wall of tool landing pages ('Generate Full-Length Book'). Thin, salesy, push one-click generation — the exact opposite of the craft-first reality. Confirms a quality gap to exploit."
+    },
+    {
+      "title": "AI-Assisted Novel Writing Guide / Best way to write a novel with AI (Reddit r/WritingWithAI)",
+      "url": "https://www.reddit.com/r/WritingWithAI/comments/1kje334/aiassisted_novel_writing_guide/",
+      "format": "forum",
+      "notes": "Real practitioners: outline-first then expand, NovelCrafter + Obsidian workflows, Claude for prose. Shows the audience wants a real workflow, not a generator button."
+    }
+  ],
+  "related_queries": [
+    "how to write a novel with AI step by step",
+    "how to write a novel with ChatGPT",
+    "write a book with AI",
+    "can you write a whole novel with AI",
+    "is it legal to publish a book written with AI",
+    "can you copyright an AI-written book",
+    "best AI tools to write a novel",
+    "AI novel generator",
+    "how to keep AI from sounding generic in fiction"
+  ],
+  "secondary_keywords": [
+    { "keyword": "how to write a novel with ChatGPT", "volume": null, "intent": "informational" },
+    { "keyword": "can you write a whole novel with AI", "volume": null, "intent": "informational" },
+    { "keyword": "is it legal to publish a book written with AI", "volume": null, "intent": "informational" },
+    { "keyword": "best AI tools to write a novel", "volume": null, "intent": "commercial" }
+  ],
+  "content_gaps": [
+    "The SERP splits into two unhelpful camps: salesy tool landing pages selling one-click 'Generate Full-Length Book', and single-tool prompt walkthroughs (ChatGPT-only). Almost nobody gives a tool-agnostic end-to-end workflow that says where each stage actually breaks.",
+    "The copyright/legal reality is a huge sibling PAA cluster ('can you copyright an AI book', 'is it legal to publish') owned by legal blogs, NOT by the writing how-tos. A novel-writing pillar that answers it plainly (US Copyright Office: AI-generated text alone isn't protectable; human authorship must carry the work — Zarya of the Dawn, the Shupe 'selection/arrangement' ruling) out-serves both.",
+    "The long-manuscript memory/consistency problem (by chapter 10 the model forgets eye colour, names, established voice) is the real wall and is mostly hand-waved. It's the natural bridge to the tools cluster.",
+    "'Keeping your voice' / not sounding like generic AI is widely feared but rarely given concrete technique — and we now have an in-house angle (develop-characters + writer's-block posts, plus the de-AI craft moves).",
+    "Few pieces are honest about what AI genuinely cannot do (carry theme, earn an emotional climax) — readers reward the balanced stance (Authors Guild, Infinite Library rank on it)."
+  ],
+  "recommended_angle": "The honest, tool-agnostic PILLAR: 'How to Write a Novel with AI: A Practical, Honest Workflow (2026)'. Frame AI as collaborator, not generator (validate the skeptics up front). Walk the full arc as a repeatable workflow with a copy-paste prompt at each stage — premise & spine, outline, characters, scene-by-scene drafting, the consistency/memory wall, revision, and voice preservation — and at each stage link DOWN to the cluster posts (develop characters [A2], beat writer's block [A3]) and ACROSS to the tools posts at the 'now your manuscript is too long for a chat window' moment (best free tools [B4], Sudowrite vs NovelCrafter [B2]). Close with a plain-English legal/can-you-publish section (copyright reality + disclosure) that the writing how-tos skip. Informational, ads, funnels to the affiliate cluster. This is the hub the whole site links up to.",
+  "monetization_fit": "ads",
+  "decision": "pursue",
+  "reason": "PURSUE as the strategic pillar. The head term is HIGH difficulty (Sudowrite/NovelCrafter/Squibler authority + tool landing pages), but (a) it is the informational hub the entire cluster links up to — every published A/B post already references this topic, so internal authority flows here; and (b) there is a genuine editorial gap: the SERP is split between salesy generators and single-tool ChatGPT walkthroughs, with the copyright/legal reality and the long-manuscript consistency wall under-served by the writing how-tos. A tool-agnostic, honest, workflow-with-prompts pillar that also answers 'can you legally publish this' out-serves both camps and converts ad traffic into affiliate clicks via the cluster links. Ranking will be gradual (needs cluster authority) but it is the correct keystone to publish now."
+}

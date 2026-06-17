@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/continuity-report.schema.json",
+  "title": "Continuity report",
+  "description": "Written next to a chapter as <basename>.continuity.json by the continuity-editor subagent. The semantic continuity judgment (does the prose contradict the bible?) is an LLM's; the deterministic gate (check-continuity.mjs) enforces 'no high-severity conflict' + structural integrity of the state. Same split as content-review (LLM) + check-prepublish (script).",
+  "type": "object",
+  "required": ["content_id", "checked_at", "conflicts"],
+  "additionalProperties": true,
+  "properties": {
+    "content_id": { "type": "string", "minLength": 1 },
+    "checked_at": { "type": "string", "format": "date-time" },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "severity", "description"],
+        "properties": {
+          "type": { "type": "string", "enum": ["timeline", "character", "world_rule", "knowledge", "object", "foreshadowing"] },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "description": { "type": "string", "minLength": 1 },
+          "fix": { "type": "string" }
+        }
+      }
+    }
+  }
+}

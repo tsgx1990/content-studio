@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/keyword-research.schema.json",
+  "title": "Keyword research sidecar",
+  "description": "Written next to a planned article as <slug>.research.json by the keyword-research skill. Provider-agnostic: any data source (web-search, manual, api) fills this same contract. seo-article requires it before drafting.",
+  "type": "object",
+  "required": ["primary_keyword", "source", "data_quality", "search_intent", "decision", "researched_at"],
+  "additionalProperties": true,
+  "properties": {
+    "primary_keyword": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "examples": ["en", "zh"] },
+    "source": {
+      "type": "string",
+      "description": "Where the data came from.",
+      "pattern": "^(manual|web-search|api:[a-z0-9_-]+)$"
+    },
+    "data_quality": {
+      "type": "string",
+      "enum": ["measured", "estimated"],
+      "description": "measured = real numbers from a tool/API; estimated = inferred (e.g. web-search has no exact volume). NEVER label a guess as 'measured'."
+    },
+    "researched_at": { "type": "string", "format": "date-time" },
+    "search_volume": {
+      "type": ["integer", "null"],
+      "description": "Monthly volume if known; null if the source cannot provide it. Do not fabricate."
+    },
+    "difficulty": {
+      "type": ["string", "number", "null"],
+      "description": "Keyword difficulty: low|med|high, a 0-100 number, or null if unknown."
+    },
+    "search_intent": {
+      "type": "string",
+      "enum": ["informational", "commercial", "transactional", "navigational"]
+    },
+    "serp_snapshot": {
+      "type": "array",
+      "description": "Real top results observed for this keyword (the competitive picture).",
+      "items": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "position": { "type": "integer" },
+          "title": { "type": "string" },
+          "url": { "type": "string" },
+          "format": { "type": "string", "examples": ["listicle", "how-to", "video", "forum", "product"] },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "related_queries": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Real related searches / People-Also-Ask harvested from the source."
+    },
+    "secondary_keywords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["keyword"],
+        "properties": {
+          "keyword": { "type": "string" },
+          "volume": { "type": ["integer", "null"] },
+          "intent": { "type": "string" }
+        }
+      }
+    },
+    "content_gaps": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "What existing top results miss — the differentiation opportunity."
+    },
+    "recommended_angle": { "type": "string" },
+    "monetization_fit": {
+      "type": "string",
+      "enum": ["ads", "affiliate", "lead", "none"],
+      "description": "Which cluster this keyword serves (see content-plan)."
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["pursue", "skip", "defer"],
+      "description": "Gate for drafting: seo-article must refuse unless this is 'pursue'."
+    },
+    "reason": { "type": "string", "description": "Why this decision (esp. for skip/defer)." }
+  }
+}

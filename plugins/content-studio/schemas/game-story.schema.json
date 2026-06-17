@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/game-story.schema.json",
+  "title": "Game story (stateful choice game)",
+  "description": "Machine-read source of truth for a choice-based GAME (a branching story with state) at projects/{slug}/game/{lang}/{slug}.game.json. Unlike interactive-fiction (a pure node graph), a game tracks state: declared boolean flags + an item inventory, choices that are AVAILABLE only when state satisfies their requirements, and effects that mutate state. A scene's outcome (win/lose/neutral) marks a terminal state; a game needs at least one reachable win. The deterministic gate (scripts/check-game-story.mjs) enforces structural + state integrity: unique ids, real start, every choice target + every referenced flag/item resolves, no statically unsatisfiable requirement, and — over a BFS of (scene x state) — a reachable win, every scene reachable, and no reachable non-ending scene that is a softlock (a stuck state with no available choice). State is restricted to flags + items (no open-ended numeric stats) so winnability is decidable.",
+  "type": "object",
+  "required": ["game_id", "start", "scenes"],
+  "additionalProperties": true,
+  "properties": {
+    "game_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 2 },
+    "start": { "type": "string", "minLength": 1, "description": "Scene id the player begins at; must exist in scenes." },
+    "flags": {
+      "type": "array",
+      "description": "Declared boolean world-state variables. A flag must be declared here before any choice may require or set it.",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "initial": { "type": "boolean", "description": "Starting value (default false)." },
+          "label": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "items": {
+      "type": "array",
+      "description": "Declared inventory items. An item must be declared here before any choice may require, add, or remove it. Items start un-held (the player has none at the start).",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "label": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Every scene in the game. scene.id is unique; choices reference other scene ids. A scene with an outcome (or ending:true, or no choices) is terminal.",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "description": "Stable slug id; referenced by start + choice.target." },
+          "text": { "type": "string", "minLength": 1, "description": "The scene prose the player sees." },
+          "ending": { "type": "boolean", "description": "True => a terminal scene. A scene with an outcome, or with no choices, is terminal too." },
+          "outcome": { "type": "string", "enum": ["win", "lose", "neutral"], "description": "Marks a terminal scene's result. A terminal scene must not also have choices. The game needs >= 1 reachable win." },
+          "choices": {
+            "type": "array",
+            "description": "Branches out of this scene. Omit (or empty) for a terminal scene. A choice is AVAILABLE only when its requires are met in the current state; taking it applies its effects then moves to target.",
+            "items": {
+              "type": "object",
+              "required": ["label", "target"],
+              "properties": {
+                "label": { "type": "string", "minLength": 1, "description": "The choice the player picks." },
+                "target": { "type": "string", "minLength": 1, "description": "Another scene's id." },
+                "requires_flags": {
+                  "type": "array",
+                  "description": "Flag conditions that must hold for this choice to be available.",
+                  "items": {
+                    "type": "object",
+                    "required": ["id"],
+                    "properties": {
+                      "id": { "type": "string", "minLength": 1, "description": "A declared flag id." },
+                      "value": { "type": "boolean", "description": "Required value (default true)." }
+                    }
+                  }
+                },
+                "requires_items": {
+                  "type": "array",
+                  "description": "Declared item ids the player must hold for this choice to be available.",
+                  "items": { "type": "string", "minLength": 1 }
+                },
+                "set_flags": {
+                  "type": "array",
+                  "description": "Effect: flags to set when this choice is taken.",
+                  "items": {
+                    "type": "object",
+                    "required": ["id"],
+                    "properties": {
+                      "id": { "type": "string", "minLength": 1, "description": "A declared flag id." },
+                      "value": { "type": "boolean", "description": "Value to set (default true)." }
+                    }
+                  }
+                },
+                "add_items": {
+                  "type": "array",
+                  "description": "Effect: declared item ids to add to inventory.",
+                  "items": { "type": "string", "minLength": 1 }
+                },
+                "remove_items": {
+                  "type": "array",
+                  "description": "Effect: declared item ids to remove from inventory.",
+                  "items": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

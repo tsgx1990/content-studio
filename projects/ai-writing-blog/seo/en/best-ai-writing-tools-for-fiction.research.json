@@ -1,0 +1,46 @@
+{
+  "primary_keyword": "best AI writing tools for fiction writers",
+  "language": "en",
+  "source": "web-search",
+  "data_quality": "estimated",
+  "researched_at": "2026-06-05T15:00:00+08:00",
+  "search_volume": null,
+  "difficulty": "high",
+  "search_intent": "commercial",
+  "serp_snapshot": [
+    { "position": 1, "title": "Best Writing Tools for Fiction Authors (2026): AI and Beyond", "url": "https://www.laterpress.com/craft-of-writing/best-ai-writing-tools-for-fiction/", "format": "listicle", "notes": "Ranked across all 3 queries; broad 'AI and beyond' craft roundup." },
+    { "position": 2, "title": "Best AI Story Writing Tools (2026): I Tested 6 Tools for Fiction Writers", "url": "https://medium.com/swlh/5-best-ai-story-writing-tools-for-fiction-writers-tested-ranked-7d6dabf1ae3d", "format": "tested-listicle", "notes": "First-person hands-on test; high E-E-A-T signal." },
+    { "position": 3, "title": "15 Best AI Writing Tools for Authors (And What Each is Best For)", "url": "https://kindlepreneur.com/best-ai-writing-tools/", "format": "authority-listicle", "notes": "Kindlepreneur = major self-publishing authority domain; hard to outrank." },
+    { "position": 4, "title": "Best AI for Writing Fiction 2026: 11 Tools Tested (Sudowrite, NovelCrafter & More)", "url": "https://blog.mylifenote.ai/the-11-best-ai-tools-for-writing-fiction-in-2026/", "format": "tested-listicle", "notes": "11 tools, names competitors in title." },
+    { "position": 6, "title": "Best AI Novel Writer 2026: 8 Tools Tested with the Same 30,000-Word Manuscript", "url": "https://www.inkfluenceai.com/best-ai-novel-writer-2026", "format": "tested-listicle", "notes": "Strong methodology angle (same 30k manuscript across tools)." },
+    { "position": 7, "title": "Best AI Tools for Authors 2026 (15 Tested, 5 Worth It)", "url": "https://manuscriptreport.com/blog/best-ai-tools-for-authors", "format": "tested-listicle", "notes": "'15 tested, 5 worth it' selective angle." },
+    { "position": 5, "title": "Sudowrite - Best AI Writing Partner for Fiction", "url": "https://sudowrite.com/", "format": "product", "notes": "Vendor's own page ranks for the term." }
+  ],
+  "related_queries": [
+    "Sudowrite vs NovelCrafter",
+    "NovelCrafter review",
+    "free AI writing tools for novelists",
+    "best AI novel writing software",
+    "best AI for writing a book",
+    "NovelAI vs Sudowrite",
+    "AI tools for worldbuilding"
+  ],
+  "secondary_keywords": [
+    { "keyword": "Sudowrite vs NovelCrafter", "volume": null, "intent": "commercial" },
+    { "keyword": "best free AI writing tools for novelists", "volume": null, "intent": "commercial" },
+    { "keyword": "NovelCrafter review", "volume": null, "intent": "commercial" }
+  ],
+  "must_cover_entities": [
+    "Sudowrite", "NovelCrafter", "NovelAI", "ChatGPT", "Claude", "Inkfluence AI",
+    "ProWritingAid", "Squibler (free tier)", "Raptor Write (free, BYO key)", "Scrivener/Atticus"
+  ],
+  "content_gaps": [
+    "True monthly-cost comparison incl. bring-your-own-key (NovelCrafter ~$4 BYO vs bundled plans) — most listicles list sticker price only.",
+    "Genuinely free options (Raptor Write, Squibler free tier) are under-covered in the top roundups.",
+    "A concrete multi-tool workflow (draft + manuscript software + brainstorm) rather than a flat ranking."
+  ],
+  "recommended_angle": "IF pursued later: a hands-on test using one fixed manuscript across tools (to match the SERP's testing bar) + a true-cost table including BYO-key + a free-options section. A thin affiliate roundup will not rank here.",
+  "monetization_fit": "affiliate",
+  "decision": "defer",
+  "reason": "Honest verdict from the real SERP: this head term is HIGH difficulty. Page one is dominated by an established authority (Kindlepreneur), the vendor's own domain (Sudowrite), and multiple genuinely hands-on 'X tools tested' listicles with strong methodology (e.g. 'same 30,000-word manuscript'). A brand-new site with no topical authority and no real testing data will not rank short-term. Recommendation: DEFER the head term; first build authority on lower-competition long-tail that the SERP shows real demand for — start with 'Sudowrite vs NovelCrafter' (B2, comparison) and 'best free AI writing tools for novelists' (B4), which are narrower and more winnable, then revisit this head term once the cluster has links and (ideally) real hands-on testing to offer."
+}

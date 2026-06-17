@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/youtube-script.schema.json",
+  "title": "YouTube script",
+  "description": "Machine-read source of truth for a YouTube video script, at projects/{slug}/video/{lang}/{slug}.script.json. The narration is segmented into roles (hook/intro/segment/cta/outro); the human-facing teleprompter doc is rendered from this into a sibling .md. The deterministic script gate (scripts/check-script.mjs) enforces structure (hook first, a CTA) and pacing (estimated runtime from narration word count / wpm within tolerance of target_seconds; hook short enough). Topic selection should reuse the SEO keyword-research entry point — never invent search demand.",
+  "type": "object",
+  "required": ["script_id", "target_seconds", "sections"],
+  "additionalProperties": true,
+  "properties": {
+    "script_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1, "description": "Working video title." },
+    "language": { "type": "string", "minLength": 2 },
+    "keyword": { "type": "string", "description": "The target keyword/topic (ideally backed by a *.research.json with decision: pursue)." },
+    "target_seconds": { "type": "integer", "description": "Intended video length in seconds. The gate checks estimated runtime is within tolerance of this." },
+    "words_per_minute": { "type": "number", "description": "Speaking rate for the runtime estimate. Default 150 (gate). Use ~125 for slow/educational delivery." },
+    "tolerance": { "type": "number", "description": "Allowed fraction over/under target_seconds. Default 0.15 (gate)." },
+    "max_hook_seconds": { "type": "number", "description": "Cap on the hook's estimated length. Default 15 (gate)." },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ordered script beats. The FIRST section must be role 'hook'; at least one section must be role 'cta'.",
+      "items": {
+        "type": "object",
+        "required": ["role", "narration"],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["hook", "intro", "segment", "cta", "outro"],
+            "description": "hook = the first ~10s grab; intro = context/value promise; segment = a body beat; cta = call to action; outro = sign-off."
+          },
+          "title": { "type": "string", "description": "Short label for this beat (shown as a heading in the rendered doc)." },
+          "narration": { "type": "string", "minLength": 1, "description": "The spoken words. Word count drives the runtime estimate." },
+          "visual": { "type": "string", "description": "Optional b-roll / on-screen note (NOT counted toward runtime)." }
+        }
+      }
+    }
+  }
+}

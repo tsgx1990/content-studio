@@ -1,0 +1,25 @@
+{
+  "defaultTarget": "hexo",
+  "targets": {
+    "hexo": {
+      "type": "hexo",
+      "writeOnly": true,
+      "postsDir": "./_demo_site/source/_posts/source/_posts",
+      "subdirByContentType": false,
+      "filenameFrom": "slug",
+      "frontMatter": {
+        "dateFormat": "YYYY-MM-DD HH:mm:ss",
+        "fields": ["title", "date", "tags", "categories", "description"],
+        "required": ["title", "description", "tags"]
+      }
+    }
+  },
+  "_notes": [
+    "Copy this to config/publish.json in your content workspace and edit it before publishing.",
+    "postsDir: set this to your real Hexo source/_posts path (absolute or relative). Replace the EDIT_ME prefix.",
+    "subdirByContentType: true => seo articles go to <postsDir>/seo/, novels to <postsDir>/novel/, etc.",
+    "writeOnly: true => only the .md file is written; run your site build/deploy yourself.",
+    "frontMatter.required: the publish gate fails if any of these are missing from the article's metadata.",
+    "The publish layer is Hexo-native and write-only; adapt or add a target for your own stack."
+  ]
+}

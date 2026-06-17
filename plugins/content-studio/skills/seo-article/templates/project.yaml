@@ -1,0 +1,15 @@
+# Copy to projects/{slug}/project.yaml and edit.
+id: { slug }
+title: { human-readable project / site name }
+type: seo-article
+language: zh-CN
+status: active
+platforms:
+  - website
+content_policy:
+  copyright_risk: strict
+  child_safety: false
+quality:
+  require_review: true
+publish:
+  target: hexo # see config/publish.json

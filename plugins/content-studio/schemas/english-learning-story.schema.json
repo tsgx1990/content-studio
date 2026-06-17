@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/english-learning-story.schema.json",
+  "title": "English-learning story (CEFR graded reader)",
+  "description": "Machine-read source of truth for one graded-reader lesson story, at projects/{slug}/learn/{lang}/{slug}.lesson.json. The story text + the controlled-vocabulary contract live here; a learner-facing page (story + objective + glossary) is rendered into a sibling .md. The deterministic gate (scripts/check-graded-reader.mjs) enforces the reproducible grading facts (grounded in docs/research/2026-06-06-cefr-graded-reader.md): per-CEFR-level sentence-length cap, story word-count band, every target word repeated >= min, and an undeclared-beyond-core word budget. Whether the story is pedagogically good / culturally apt is content-review's job, not the gate's.",
+  "type": "object",
+  "required": ["lesson_id", "cefr_level", "title", "story", "target_vocabulary"],
+  "additionalProperties": true,
+  "properties": {
+    "lesson_id": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 2, "description": "Target language being taught (this vertical: 'en')." },
+    "cefr_level": {
+      "type": "string",
+      "enum": ["A1", "A2", "B1", "B2", "C1", "C2"],
+      "description": "CEFR level. Drives the gate's default sentence-length cap, word-count band, and beyond-core budget."
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "learning_objective": { "type": "string", "description": "What the learner should be able to do/understand after this story (can-do statement)." },
+    "story": { "type": "string", "minLength": 1, "description": "The graded-reader text itself (paragraphs separated by blank lines). This is what the gate tokenizes." },
+    "target_vocabulary": {
+      "type": "array",
+      "minItems": 1,
+      "description": "The new words this lesson teaches. Each MUST appear in the story >= min_target_repetitions times (you can't teach a word you don't use).",
+      "items": {
+        "type": "object",
+        "required": ["word", "gloss"],
+        "properties": {
+          "word": { "type": "string", "minLength": 1, "description": "The headword (base form). Matched inflection-aware in the story." },
+          "gloss": { "type": "string", "minLength": 1, "description": "A learner-friendly definition (ideally itself within level)." },
+          "example": { "type": "string", "description": "Optional example sentence for the glossary." }
+        }
+      }
+    },
+    "allowed_extra": {
+      "type": "array",
+      "description": "Project-specific extra headwords to treat as controlled beyond the shipped core (e.g. a theme's common words). Lowercase base forms.",
+      "items": { "type": "string" }
+    },
+    "max_sentence_words": { "type": "integer", "description": "Override the level's sentence-length cap." },
+    "min_words": { "type": "integer", "description": "Override the level's story minimum word count." },
+    "max_words": { "type": "integer", "description": "Override the level's story maximum word count." },
+    "min_target_repetitions": { "type": "integer", "description": "Override how many times each target word must appear. Default 2 (gate)." },
+    "max_uncontrolled_ratio": { "type": "number", "description": "Override the beyond-core word budget (fraction of total words). Default is per-level (A1 0.10 .. C2 0.80)." }
+  }
+}

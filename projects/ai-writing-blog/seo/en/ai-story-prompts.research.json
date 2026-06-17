@@ -1,0 +1,88 @@
+{
+  "primary_keyword": "AI story prompts",
+  "language": "en",
+  "source": "web-search",
+  "data_quality": "estimated",
+  "researched_at": "2026-06-08T04:00:00Z",
+  "search_volume": null,
+  "difficulty": "med",
+  "search_intent": "informational",
+  "serp_snapshot": [
+    {
+      "title": "40 AI book writing prompts: Ideas to start your next story (AI at Meta)",
+      "url": "https://ai.meta.com/learn/ai-creativity/book-writing-prompts",
+      "format": "listicle",
+      "notes": "The authority competitor. 40 prompts in 8 use-case categories (plot, character, worldbuilding, theme, dialogue, etc.) as use-case + example-prompt tables. High authority but Meta-AI-branded and generic examples; no reusable template + why-it-works, no anti-generic guidance."
+    },
+    {
+      "title": "ChatGPT for Authors: 30+ Prompts to Help Write Your Next Book (Thinkific)",
+      "url": "https://www.thinkific.com/blog/ai-to-write-a-book",
+      "format": "listicle",
+      "notes": "Direct format rival. Use-case + example-prompt table (outline, chapters, plot, setting, even publisher outreach). ChatGPT-centric and book-generic (skews nonfiction-friendly); prompts are one-off examples, not parameterized templates."
+    },
+    {
+      "title": "The Fiction Writing With AI Prompt Library — 75+ prompts (Write With AI / Substack)",
+      "url": "https://writewithai.substack.com/p/the-fiction-writing-with-ai-prompt",
+      "format": "product",
+      "notes": "PAID Notion library (75+ prompts) behind a Substack paywall. Strong 'AI-assisted not AI-generated' framing. A free, high-quality, copy-paste set on a blog directly undercuts this."
+    },
+    {
+      "title": "Please share your writing prompts to get the best prose from AI (Reddit r/WritingWithAI)",
+      "url": "https://www.reddit.com/r/WritingWithAI/comments/1kq9yti/please_share_your_writing_prompts_to_get_the_best",
+      "format": "forum",
+      "notes": "Real practitioner demand + the framework that works: context (story bible/profiles) + role + constraints + format; feed the AI the actual manuscript; work in 1-2k-word chunks. Confirms readers want REUSABLE structure, not random example lines."
+    },
+    {
+      "title": "AI prompts for sharper fiction editing for writers (OpenAI Developer Community)",
+      "url": "https://community.openai.com/t/ai-prompts-for-sharper-fiction-editing-for-writers-llm-writing-nlp/1363351",
+      "format": "forum",
+      "notes": "Power-user revision prompt: 'write like a structural engineer inspecting a bridge', issue IDs, severity, minimal patch, world-rules ledger. Shows the high end of what a revision prompt can do; nothing in the listicles matches this depth."
+    },
+    {
+      "title": "AI and Fiction: A Writer's Tool, Not a Crutch (Timothy Patterson / Substack)",
+      "url": "https://timothypatterson.substack.com/p/ai-tools-for-fiction-writers",
+      "format": "how-to",
+      "notes": "Use-case essay (plot brainstorming, character exploration, worldbuilding, scene outlining) with the 'stay in control' stance. Confirms the trusted framing but gives few copy-paste prompts."
+    },
+    {
+      "title": "10 ways AI can help writers (Royal Literary Fund)",
+      "url": "https://www.rlf.org.uk/posts/10-ways-ai-can-help-writers",
+      "format": "how-to",
+      "notes": "High-authority literary body. A few parameterized prompts with X-slots ('write X words of flash fiction on X'). Balanced, voice-preserving tone. General writing, not a fiction prompt pack."
+    },
+    {
+      "title": "Best Writing Tools for Fiction Authors (2026): AI and Beyond (LaterPress)",
+      "url": "https://www.laterpress.com/craft-of-writing/best-ai-writing-tools-for-fiction",
+      "format": "product",
+      "notes": "Tools listicle ranking for the adjacent commercial query (Sudowrite/NovelCrafter/Squibler/SidekickWriter). Shows the prompt query sits next to the tools query — natural funnel to our Cluster B."
+    }
+  ],
+  "related_queries": [
+    "AI story prompts for fiction",
+    "ChatGPT prompts for writing a book",
+    "AI writing prompts for novelists",
+    "best AI prompts for creative writing",
+    "AI prompts for plot ideas",
+    "AI prompts for character development",
+    "AI prompts for worldbuilding",
+    "how to prompt AI to write a story",
+    "AI prompts to edit a novel"
+  ],
+  "secondary_keywords": [
+    { "keyword": "ChatGPT prompts for writing a book", "volume": null, "intent": "informational" },
+    { "keyword": "AI writing prompts for novelists", "volume": null, "intent": "informational" },
+    { "keyword": "AI prompts for character development", "volume": null, "intent": "informational" },
+    { "keyword": "best AI tools for fiction writers", "volume": null, "intent": "commercial" }
+  ],
+  "content_gaps": [
+    "Almost every ranking page is a flat list of one-off EXAMPLE prompts ('write a plot about a small town...'). Nobody gives REUSABLE, parameterized templates with [bracketed slots] + a one-line 'why this works / how to push it harder'. That's the single biggest differentiator.",
+    "The best libraries (75+ prompts) are PAYWALLED (Substack/Notion). A free, copy-paste, fiction-specific set on a blog beats them on access.",
+    "The listicles organize by loose use-case but not by the actual WRITING WORKFLOW. Organizing the prompts by stage (idea -> plot -> character -> world -> scene -> dialogue -> revision) lets this post funnel straight UP to the new Pillar 1 (the 7-stage workflow) and ACROSS to A2/A3.",
+    "Most are ChatGPT- or Meta-AI-branded; a tool-agnostic pack (works in ChatGPT/Claude/Sudowrite/NovelCrafter) serves more readers.",
+    "Nobody answers the real failure: the prompts produce GENERIC output. A short 'how to keep these from sounding like AI' section (paste a voice sample, reject the first answer, edit pass) is on-brand with our de-AI gate and absent from competitors."
+  ],
+  "recommended_angle": "'50+ AI Story Prompts for Fiction Writers (Copy-Paste, by Stage)'. A free, tool-agnostic prompt PACK organized to mirror Pillar 1's workflow: idea/premise, plot & structure, character, worldbuilding, scene drafting, dialogue, revision. Each prompt is copy-paste-ready with [bracketed slots] and a one-line note on why it works and how to push it (reject-the-safe-answer). Open by setting intent (these are prompts you give an AI as a collaborator, you stay the author) and close with a short 'keep them from sounding generic' section (voice sample + edit pass). Funnel UP to {how-to-write-a-novel-with-ai}, ACROSS to {how-to-develop-fictional-characters-with-ai} (character section) and {overcome-writers-block-with-ai} (idea section), and to the tools posts at the drafting/consistency moment. Informational, ads, funnels to affiliate.",
+  "monetization_fit": "ads",
+  "decision": "pursue",
+  "reason": "PURSUE. Clean informational intent with a concrete copy-paste job-to-be-done, and a winnable SERP: the top results are generic example-prompt listicles (Meta, Thinkific), paywalled libraries (Substack), and forum threads. None offers a free, fiction-specific, tool-agnostic pack of REUSABLE parameterized templates organized by writing stage with anti-generic guidance. That gap plus the funnel fit (organize by Pillar 1's stages -> links straight up to the new hub and across to A2/A3, and to the tools cluster at drafting) makes it a strong Cluster-A addition. Difficulty medium (Meta is high authority but its piece is a generic list). Dominant intent = prompts you feed an AI to develop a story; the 'AI-generated writing prompts for humans' reading is secondary and noted."
+}

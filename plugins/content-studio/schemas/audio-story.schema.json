@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/audio-story.schema.json",
+  "title": "Audio story",
+  "description": "Machine-read source of truth for an audio story (narrated fiction / audio drama / TTS-voiced short), at projects/{slug}/audio/{lang}/{slug}.audio.json. The piece is an ordered list of cues — narration / dialogue / sfx / music — over a declared cast of voices and a declared set of sounds; the human-/producer-facing script is rendered from this into a sibling .md. The deterministic audio-story gate (scripts/check-audio-story.mjs) enforces, for EAR-ONLY consumption: every spoken cue resolves to a declared voice, every sfx/music cue resolves to a declared sound, the opening orients the listener (not cold dialogue), runtime is within tolerance of target_seconds, and a TTS-pronounceability scan — every TTS-hostile token (digit runs, currency, symbols, URLs, ALL-CAPS acronyms) must be covered by a say_as override.",
+  "type": "object",
+  "required": ["audio_id", "target_seconds", "voices", "cues"],
+  "additionalProperties": true,
+  "properties": {
+    "audio_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1, "description": "Working title of the piece." },
+    "language": { "type": "string", "minLength": 2 },
+    "keyword": { "type": "string", "description": "Optional target keyword/topic (ideally backed by a *.research.json with decision: pursue)." },
+    "target_seconds": { "type": "integer", "description": "Intended runtime in seconds. The gate checks estimated runtime (spoken words / wpm + sfx/music seconds) is within tolerance." },
+    "words_per_minute": { "type": "number", "description": "Narration rate for the runtime estimate. Default 155 (gate). Use ~130 for slow/educational delivery." },
+    "tolerance": { "type": "number", "description": "Allowed fraction over/under target_seconds. Default 0.15 (gate)." },
+    "voices": {
+      "type": "array",
+      "minItems": 1,
+      "description": "The cast. Every narration/dialogue cue must reference one of these by id; no declared voice may be left unused.",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "description": "Stable voice id referenced by cues (e.g. 'narrator', 'mara')." },
+          "name": { "type": "string", "description": "Display name shown in the rendered cast list / speaker labels." },
+          "kind": { "type": "string", "enum": ["narrator", "character"], "description": "narrator = tells the story; character = speaks dialogue. Default character." },
+          "tts_voice": { "type": "string", "description": "Optional concrete TTS voice id/name to render with (e.g. an ElevenLabs/Polly voice)." }
+        }
+      }
+    },
+    "sounds": {
+      "type": "array",
+      "description": "Declared sound/music assets. Every sfx/music cue must reference one of these by id; no declared sound may be left unused.",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "description": "Stable sound id referenced by sfx/music cues (e.g. 'wind', 'foghorn', 'theme')." },
+          "description": { "type": "string", "description": "What the sound is (shown in the rendered cue)." }
+        }
+      }
+    },
+    "cues": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ordered cues. The FIRST cue may not be 'dialogue' (orient the listener first). narration/dialogue require voice+text; sfx/music require sound.",
+      "items": {
+        "type": "object",
+        "required": ["type"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["narration", "dialogue", "sfx", "music"],
+            "description": "narration = narrator telling; dialogue = a character speaking; sfx = a sound effect; music = a music cue."
+          },
+          "voice": { "type": "string", "description": "For narration/dialogue: the voice id speaking (must be declared)." },
+          "text": { "type": "string", "description": "For narration/dialogue: the spoken words. Word count drives the runtime estimate and the TTS-safety scan." },
+          "sound": { "type": "string", "description": "For sfx/music: the declared sound id this cue plays." },
+          "seconds": { "type": "number", "description": "For sfx/music: optional duration added to the runtime estimate." },
+          "direction": { "type": "string", "description": "Optional delivery note (tone/emotion) shown in the rendered script; NOT spoken, NOT counted." },
+          "say_as": {
+            "type": "array",
+            "description": "Pronunciation overrides for TTS-hostile tokens in this cue's text. Each entry declares a substring and how to speak it (SSML interpret-as). A token flagged by the safety scan passes if it is covered here.",
+            "items": {
+              "type": "object",
+              "required": ["text", "as"],
+              "properties": {
+                "text": { "type": "string", "minLength": 1, "description": "The exact substring in the cue text to control (e.g. '0300', 'NW', '$5')." },
+                "as": {
+                  "type": "string",
+                  "enum": ["characters", "spell-out", "cardinal", "ordinal", "number", "digits", "date", "time", "telephone", "currency", "address", "unit", "fraction", "expletive", "verbatim"],
+                  "description": "SSML interpret-as value — how the engine should voice it."
+                },
+                "alias": { "type": "string", "description": "Optional plain spoken form (SSML sub alias), e.g. 'three a.m.' for '0300'." }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

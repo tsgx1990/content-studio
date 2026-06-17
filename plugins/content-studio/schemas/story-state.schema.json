@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/story-state.schema.json",
+  "title": "Story state (long-form)",
+  "description": "Machine-read structured memory for a long-form project, at projects/{slug}/novel/state.json. The narrative bible lives in Markdown (bible.md, style-guide.md); THIS file holds the atomic, typed, verifiable facts the continuity gate and chapter-generation consume. Research-grounded: a bible without enforcement is a dictionary nobody consults — so this is structured + gated.",
+  "type": "object",
+  "required": ["story_id", "updated_at", "premise", "characters", "chapters"],
+  "additionalProperties": true,
+  "properties": {
+    "story_id": { "type": "string", "minLength": 1 },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "premise": { "type": "string", "minLength": 1, "description": "One-to-three sentence story premise." },
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "status"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "description": "Stable slug id; referenced by relationships + chapter casts." },
+          "name": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "enum": ["alive", "dead", "unknown"] },
+          "died_chapter": { "type": ["integer", "null"], "description": "If status=dead, the chapter number where they died (enables the 'no resurrection' continuity check)." },
+          "appearance": { "type": "string", "description": "Fixed physical anchors (eye/hair color, height, marks) — the consistency anchors." },
+          "traits": { "type": "array", "items": { "type": "string" } },
+          "goal": { "type": "string" },
+          "fear": { "type": "string" },
+          "first_appeared_chapter": { "type": ["integer", "null"] },
+          "relationships": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["with", "type"],
+              "properties": {
+                "with": { "type": "string", "description": "Another character's id." },
+                "type": { "type": "string", "examples": ["ally", "rival", "family", "romantic", "enemy"] },
+                "state": { "type": "string", "description": "Current state of the relationship (evolves)." }
+              }
+            }
+          },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "description": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "world_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "rule"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "rule": { "type": "string", "minLength": 1, "description": "A hard constraint of the world (magic cost, tech limit, law). Chapters must not violate it." },
+          "arcs": { "type": "array", "items": { "type": "string" }, "description": "OPTIONAL arc ids this rule applies to. If omitted/empty the rule is GLOBAL (always injected). If set, build-chapter-context only injects it while writing a chapter inside one of these arcs — lets a long, multi-setting book localize rules so per-chapter context stays small without dropping a rule that's actually in play." },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "timeline": {
+      "type": "array",
+      "description": "Ordered story events anchored to chapters. Chapter numbers must be non-decreasing.",
+      "items": {
+        "type": "object",
+        "required": ["chapter", "event"],
+        "properties": {
+          "chapter": { "type": "integer" },
+          "event": { "type": "string", "minLength": 1 },
+          "time_marker": { "type": "string", "description": "In-world time, e.g. 'Day 3', 'Spring, Year 412'." }
+        }
+      }
+    },
+    "foreshadowing": {
+      "type": "array",
+      "description": "Planted threads and whether they have paid off. The gate flags resolved-before-setup.",
+      "items": {
+        "type": "object",
+        "required": ["id", "setup_chapter", "description", "status"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "setup_chapter": { "type": "integer" },
+          "description": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "enum": ["open", "resolved", "abandoned"] },
+          "resolved_chapter": { "type": ["integer", "null"] },
+          "last_advanced_chapter": { "type": ["integer", "null"], "description": "OPTIONAL chapter where this still-open thread was last touched/advanced. build-chapter-context flags a thread as long-dormant when the current chapter is >= --dormant-after beyond this (or setup_chapter if unset) — surfacing planted-and-forgotten threads. It is NOT dropped, only flagged." }
+        }
+      }
+    },
+    "arcs": {
+      "type": "array",
+      "description": "OPTIONAL book/arc structure for long works. Bounds what state is 'in play' so chapter-context injection stays small as the book grows (the 60k-tractability lever). If present, every chapter number must fall inside exactly one arc's [start_chapter, end_chapter] range; arcs must not overlap; start_chapters strictly increasing. The last arc may leave end_chapter null (open).",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "start_chapter"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "description": "Stable arc slug." },
+          "title": { "type": "string", "minLength": 1 },
+          "start_chapter": { "type": "integer", "description": "First chapter of this arc (1-based)." },
+          "end_chapter": { "type": ["integer", "null"], "description": "Last chapter of this arc; null = still open (only valid on the final arc)." },
+          "summary": { "type": "string", "description": "One-to-three sentence arc recap (used as arc-level context)." },
+          "goal": { "type": "string", "description": "What the protagonist is driving at across this arc." }
+        }
+      }
+    },
+    "chapters": {
+      "type": "array",
+      "description": "Chapter ledger. number must be unique; cast entries reference character ids.",
+      "items": {
+        "type": "object",
+        "required": ["number", "status"],
+        "properties": {
+          "number": { "type": "integer" },
+          "title": { "type": "string" },
+          "summary": { "type": "string", "description": "Short recap used as last-N-chapters context." },
+          "pov": { "type": "string", "description": "POV character id." },
+          "cast": { "type": "array", "items": { "type": "string" }, "description": "Character ids appearing in this chapter." },
+          "status": { "type": "string", "enum": ["planned", "drafted", "reviewed", "published"] }
+        }
+      }
+    }
+  }
+}

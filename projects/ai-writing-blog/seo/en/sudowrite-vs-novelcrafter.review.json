@@ -1,0 +1,28 @@
+{
+  "content_id": "sudowrite-vs-novelcrafter",
+  "content_type": "seo-article",
+  "reviewed_at": "2026-06-05T15:45:00+08:00",
+  "reviewers": ["content-review", "seo-editor", "copyright-risk-reviewer"],
+  "publishable": true,
+  "copyright_risk": "low",
+  "monetization": "affiliate",
+  "scores": { "overall": 8.6, "intent_match": 9, "structure": 9, "originality": 8 },
+  "must_fix": [],
+  "should_fix": [
+    "Confirm current pricing on both vendor sites before publish — pricing is time-sensitive and labeled 'as observed'."
+  ],
+  "nice_to_have": [
+    "Add internal links to a future NovelCrafter review (B3) and best-free-AI-writing-tools (B4) once they exist.",
+    "Optional: a concrete numeric true-cost table once real per-word credit/API rates are gathered."
+  ],
+  "notes": {
+    "seo_editor": "Intent match full (commercial chooser). Grounded in real SERP; differentiates via true-cost angle and decision section, which the SERP leaves open. Title ~52 chars OK; draft meta description slightly long, tightened below.",
+    "copyright_risk_reviewer": "Low. Brand/product names used nominatively and factually; no copied vendor copy; pricing framed as observed + verify. Affiliate disclosure present at top (FTC-compliant)."
+  },
+  "metadata": {
+    "title": "Sudowrite vs NovelCrafter (2026): Which Should You Pay For?",
+    "description": "Independent Sudowrite vs NovelCrafter comparison — features, real pricing, a true-cost example, and a simple 'pick this if you're…' guide for fiction writers.",
+    "tags": ["sudowrite", "novelcrafter", "ai writing tools", "fiction writing"],
+    "categories": ["reviews", "ai-writing-tools"]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "content_id": "ai-story-prompts",
+  "content_type": "seo-article",
+  "language": "en",
+  "reviewed_at": "2026-06-08T04:30:00Z",
+  "reviewers": ["content-review", "seo-editor", "copyright-risk-reviewer"],
+  "publishable": true,
+  "copyright_risk": "low",
+  "monetization": "ads",
+  "scores": { "intent_match": 9, "differentiation": 9, "structure": 9, "honesty": 9 },
+  "must_fix": [],
+  "should_fix": [],
+  "nice_to_have": [
+    "If a worldbuilding cluster post (A6) ships, add a post_link at the worldbuilding section.",
+    "Model names (ChatGPT/Claude) move fast — re-verify the tool references before any major refresh.",
+    "Once ZH-native siblings exist, consider cross-linking; none added yet to avoid dead links."
+  ],
+  "metadata": {
+    "title": "50+ Copy-Paste AI Story Prompts for Fiction Writers",
+    "description": "52 reusable, copy-paste AI story prompts for fiction writers, organized by stage: idea, plot, character, worldbuilding, scene, dialogue, and revision.",
+    "tags": ["ai story prompts", "ai writing prompts", "chatgpt prompts for writers", "fiction writing", "ai for novelists"],
+    "categories": ["AI Writing", "How-To"],
+    "slug": "ai-story-prompts"
+  }
+}

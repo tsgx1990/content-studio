@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/interactive-fiction.schema.json",
+  "title": "Interactive fiction story graph",
+  "description": "Machine-read source of truth for a branching (choose-your-path) story, at projects/{slug}/if/{lang}/{slug}.if.json. The prose a reader sees is rendered from this graph into a sibling .md (anchored sections + in-page choice links). The deterministic graph gate (scripts/check-storygraph.mjs) enforces structural integrity: unique node ids, a real start node, every choice target resolves, every node is reachable, no dead-ends that are not endings, and a reachable ending. This is the interactive-fiction analogue of the novel state file — structured narrative the gate can verify.",
+  "type": "object",
+  "required": ["story_id", "start", "nodes"],
+  "additionalProperties": true,
+  "properties": {
+    "story_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 2 },
+    "start": { "type": "string", "minLength": 1, "description": "Node id the reader begins at; must exist in nodes." },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Every scene in the story. node.id is unique; choices reference other node ids.",
+      "items": {
+        "type": "object",
+        "required": ["id", "text"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1, "description": "Stable slug id; referenced by start + choice.target." },
+          "text": { "type": "string", "minLength": 1, "description": "The scene prose the reader sees at this node." },
+          "ending": { "type": "boolean", "description": "True => a terminal node. A node with no choices is treated as an ending too." },
+          "choices": {
+            "type": "array",
+            "description": "The branches out of this node. Omit (or empty) for an ending.",
+            "items": {
+              "type": "object",
+              "required": ["label", "target"],
+              "properties": {
+                "label": { "type": "string", "minLength": 1, "description": "The choice the reader clicks." },
+                "target": { "type": "string", "minLength": 1, "description": "Another node's id." }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

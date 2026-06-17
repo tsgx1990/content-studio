@@ -1,0 +1,51 @@
+{
+  "primary_keyword": "Sudowrite vs NovelCrafter",
+  "language": "en",
+  "source": "web-search",
+  "data_quality": "estimated",
+  "researched_at": "2026-06-05T15:30:00+08:00",
+  "search_volume": null,
+  "difficulty": "medium",
+  "search_intent": "commercial",
+  "serp_snapshot": [
+    { "position": 1, "title": "Sudowrite vs Novelcrafter: Which AI Writing Tool Is Better for Fiction Writers", "url": "https://ilampadmanabhan.medium.com/sudowrite-vs-novelcrafter-bdc3f33ba95f", "format": "comparison", "notes": "Medium head-to-head; ranks #1 across both queries." },
+    { "position": 2, "title": "Sudowrite vs. Novelcrafter: The Ultimate AI Showdown for Novelists", "url": "https://sudowrite.com/blog/sudowrite-vs-novelcrafter-the-ultimate-ai-showdown-for-novelists/", "format": "comparison (vendor)", "notes": "Sudowrite's own blog ranks — vendor bias; an independent take has an angle." },
+    { "position": 3, "title": "Sudowrite vs. NovelCrafter: Which Is Best for Fiction and Creative Storytelling?", "url": "https://aiwritingtoolshub.com/sudowrite-vs-novelcrafter/", "format": "comparison", "notes": "Niche affiliate comparison site." },
+    { "position": 4, "title": "Sudowrite vs NovelCrafter vs SidekickWriter in 2026", "url": "https://www.sidekickwriter.com/blog/sudowrite-vs-novelcrafter-vs-sidekickwriter-2026", "format": "comparison (3-way, vendor)", "notes": "Injects a third tool; vendor content." },
+    { "position": 5, "title": "Compare Novelcrafter vs. Sudowrite in 2026", "url": "https://slashdot.org/software/comparison/Novelcrafter-vs-Sudowrite/", "format": "directory", "notes": "Thin directory listing — beatable with real depth." },
+    { "position": 6, "title": "Sudowrite Review 2026: Tested w/ 3 Stories", "url": "https://nerdynav.com/sudowrite-review/", "format": "review", "notes": "Hands-on single-tool review; ranks for the comparison too." }
+  ],
+  "related_queries": [
+    "Novelcrafter vs Sudowrite pricing",
+    "Sudowrite Muse 1.5",
+    "NovelCrafter codex",
+    "Sudowrite alternatives",
+    "is Sudowrite worth it",
+    "NovelCrafter bring your own key cost"
+  ],
+  "secondary_keywords": [
+    { "keyword": "Sudowrite pricing", "volume": null, "intent": "commercial" },
+    { "keyword": "NovelCrafter review", "volume": null, "intent": "commercial" },
+    { "keyword": "Sudowrite alternatives", "volume": null, "intent": "commercial" }
+  ],
+  "must_cover_entities": [
+    "Sudowrite (Muse 1.5, Story Bible, Story Engine, Canvas, Visualize, credits)",
+    "NovelCrafter (Codex, bring-your-own-key, acts/chapters/scenes, mobile)",
+    "BYO models: OpenAI / Claude / local LLM"
+  ],
+  "verified_facts": [
+    "Sudowrite: own fiction-tuned model Muse 1.5; credit system; entry Hobby&Student ~$10/mo, paid tiers ~$19–$59/mo.",
+    "NovelCrafter: platform ~$4–$20/mo but AI usage billed separately via your own API key; Codex lore database; mobile; import/export Word/Markdown/HTML.",
+    "Philosophy: Sudowrite = guided creative partner ('Magic Wand'); NovelCrafter = configurable system ('Master Blueprint' / 'Photoshop of AI writing').",
+    "Sudowrite easier to start; NovelCrafter more control + privacy (data local) but steeper and uses general (non-fiction-tuned) models unless you pick one."
+  ],
+  "content_gaps": [
+    "A real TRUE-COST worked example (Sudowrite credits vs NovelCrafter sub + API usage for an ~80k-word novel) — top results say 'cheaper on paper' but don't compute it.",
+    "A quick decision chooser ('pick X if you are Y') instead of a flat feature dump.",
+    "Honest prose-quality note: Muse 1.5 (fiction-tuned) vs NovelCrafter+BYO general model."
+  ],
+  "recommended_angle": "An independent, no-vendor-bias chooser: philosophy contrast → side-by-side feature/pricing table → a worked true-cost example for an 80k novel → a 'pick this if you are…' decision section → FAQ. Lead with the BYO-key true-cost calc since that's the gap the SERP leaves open.",
+  "monetization_fit": "affiliate",
+  "decision": "pursue",
+  "reason": "Medium difficulty and clearly winnable: page one mixes vendor-biased posts (Sudowrite's own blog), a thin directory (Slashdot), and niche affiliate sites — an independent, genuinely useful chooser with a true-cost calculation can differentiate. Strong commercial intent + real affiliate fit for both tools, and it is a sensible authority-building entry point per the B1 deferral."
+}

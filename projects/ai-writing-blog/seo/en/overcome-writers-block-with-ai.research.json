@@ -1,0 +1,85 @@
+{
+  "primary_keyword": "how to overcome writer's block with AI",
+  "language": "en",
+  "source": "web-search",
+  "data_quality": "estimated",
+  "researched_at": "2026-06-07T08:05:00Z",
+  "search_volume": null,
+  "difficulty": "med",
+  "search_intent": "informational",
+  "serp_snapshot": [
+    {
+      "title": "How to Use AI to Beat Writer's Block (Originality.AI)",
+      "url": "https://originality.ai/blog/using-ai-to-beat-writers-block",
+      "format": "how-to",
+      "notes": "Vendor blog. Broad how-to + scheduling/tracking angle. General content-writing, not fiction-specific."
+    },
+    {
+      "title": "9 Ways to Overcome Writer's Block Using Generative AI (Wordtune)",
+      "url": "https://www.wordtune.com/blog/how-to-overcome-writers-block",
+      "format": "listicle",
+      "notes": "Product-led listicle (sentence suggestions/rewrites). Tilts toward Wordtune's own feature set."
+    },
+    {
+      "title": "AI is NOT a cure for writer's block, but these 3 practices are (LinkedIn)",
+      "url": "https://www.linkedin.com/pulse/ai-cure-writers-block-3-practices-theo-vasilis-ot8ze",
+      "format": "forum",
+      "notes": "Contrarian opinion. 'Read. Think. Make notes.' The skeptic counter-narrative ranks — signals readers want honesty, not hype."
+    },
+    {
+      "title": "Is AI a cure for writer's block? (Simon K Jones, Substack)",
+      "url": "https://simonkjones.substack.com/p/is-ai-a-cure-for-writers-block",
+      "format": "how-to",
+      "notes": "Essay warning that AI-as-jumpstart becomes AI-always-the-fix. The dependency risk angle."
+    },
+    {
+      "title": "Would you use AI to break writer's block? We asked 5 experts (The Conversation)",
+      "url": "https://theconversation.com/would-you-use-ai-to-break-writers-block-we-asked-5-experts-271627",
+      "format": "how-to",
+      "notes": "Journalism / expert roundup (Jan 2026). High authority, balanced. 'AI gets them back in the zone.'"
+    },
+    {
+      "title": "How To Use AI To Overcome Writer's Block (Without Losing Your Voice) (Medium)",
+      "url": "https://esepens.medium.com/how-to-use-ai-to-overcome-writers-block-without-losing-your-voice-ffb50afa9e08",
+      "format": "how-to",
+      "notes": "The 'keep your voice' angle + concrete moves (vague concept -> chapter outline). Closest to a fiction-useful piece, but thin."
+    },
+    {
+      "title": "How to Overcome Writer's Block with AI (Free) — 10 Tips (Studio Global)",
+      "url": "https://www.studioglobal.ai/blog/overcome-writers-block",
+      "format": "listicle",
+      "notes": "Generic 10-tip prompt listicle. Novelist example present but shallow."
+    },
+    {
+      "title": "I use AI to (slightly) assist me when I struggle with writer's block (Reddit r/writers)",
+      "url": "https://www.reddit.com/r/writers/comments/17qy27w/i_use_ai_to_slightly_assist_me_when_i_struggle/",
+      "format": "forum",
+      "notes": "Real writer sentiment: brainstorm/bounce ideas, but 'slightly'. Confirms the help-not-replace framing readers trust."
+    }
+  ],
+  "related_queries": [
+    "ai prompts to overcome writer's block",
+    "is AI a cure for writer's block",
+    "use AI to break writer's block without losing your voice",
+    "best AI tools for writer's block",
+    "how to use ChatGPT for writer's block",
+    "overcome writer's block free AI",
+    "AI to get unstuck on a novel"
+  ],
+  "secondary_keywords": [
+    { "keyword": "AI prompts for writer's block", "volume": null, "intent": "informational" },
+    { "keyword": "ChatGPT for writer's block", "volume": null, "intent": "informational" },
+    { "keyword": "is AI a cure for writer's block", "volume": null, "intent": "informational" },
+    { "keyword": "best AI tools for writer's block", "volume": null, "intent": "commercial" }
+  ],
+  "content_gaps": [
+    "Two camps own the SERP and neither helps fully: generic '10 prompts/tools' listicles (Wordtune, Studio Global) vs. pure contrarian opinion (LinkedIn, Simon K Jones). Nobody MERGES them — an honest piece that says which kinds of block AI helps and which it makes worse.",
+    "No one types the block. 'Writer's block' is really 4+ different problems (blank page, mushy middle, fear/perfectionism, lost-the-thread). Matching a specific AI move to each type is a clean, original structure no top result uses.",
+    "The #1 fear — 'losing your voice' / AI-dependency — is widely raised but rarely answered with concrete technique (use AI on the scaffolding, never the prose; throw the output away after it unsticks you).",
+    "Most results are generic content/blog writing; few are FICTION-specific (stuck on a scene, a character that won't move, a sagging middle) — our niche's exact pain."
+  ],
+  "recommended_angle": "An honest, craft-first guide for novelists: 'How to Overcome Writer's Block with AI (and When Not To)'. Open by validating the skeptics (AI can deepen a block if misused), then TYPE the block and match each type to a specific AI move: blank page -> generate 10 bad openings to react against; sagging middle -> ask AI to interrogate your characters' wants; fear/perfectionism -> dictate-and-let-AI-clean-up so you stop self-editing; lost-the-thread -> have AI summarize what you've written to find the missing beat. Each with a copy-paste prompt. Then the voice guardrail (AI on scaffolding, not prose; discard the unstick output) and the dependency warning. Funnel to Cluster B drafting tools at the 'now keep writing' moment. Informational, ads, funnels to affiliate.",
+  "monetization_fit": "ads",
+  "decision": "pursue",
+  "reason": "PURSUE. Clean informational intent, healthy and winnable SERP (blogs + forums + one authority journalism piece, no insurmountable wall). Strong differentiation gap: the top results split into hype-listicles and skeptic-essays with nobody merging them, and none TYPES the block or addresses fiction specifically. A craft-first, block-type-matched, voice-guarded guide out-serves all of them and funnels naturally into the commercial cluster. On-niche for the novel-writing positioning and complements A2 (develop characters) and the published Cluster-B posts."
+}

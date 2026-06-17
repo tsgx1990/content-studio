@@ -1,0 +1,24 @@
+{
+  "content_id": "mianfei-ai-xie-xiaoshuo-gongju",
+  "content_type": "seo-article",
+  "language": "zh",
+  "reviewed_at": "2026-06-06T11:00:00+08:00",
+  "reviewers": ["content-review", "seo-editor", "copyright-risk-reviewer"],
+  "publishable": true,
+  "copyright_risk": "low",
+  "monetization": "ads",
+  "scores": { "intent_match": 9, "differentiation": 9, "native_fit": 9, "honesty": 9 },
+  "must_fix": [],
+  "should_fix": [],
+  "nice_to_have": [
+    "发布前再跑一次 SearXNG 核对各工具当时的免费政策（免费额度变动快）。",
+    "建有中文‘付费工具对比’姊妹篇后，加一条站内互链（当前无中文姊妹篇，暂不外链以免死链）。"
+  ],
+  "metadata": {
+    "title": "免费AI写小说软件怎么选（2026）：先搞懂“免费”的三种含义",
+    "description": "别被“免费无限”带偏：免费AI写小说软件有真免费、免费档、自接API付费三种。本文按中国市场把 DeepSeek、笔灵AI、蛙蛙写作、豆包、Kimi 等真实工具分桶，并给出中国访问与长文本‘失忆’的诚实提醒。",
+    "tags": ["AI写小说", "免费工具", "网文", "AI写作"],
+    "categories": ["AI写作", "工具测评"],
+    "slug": "mianfei-ai-xie-xiaoshuo-gongju"
+  }
+}

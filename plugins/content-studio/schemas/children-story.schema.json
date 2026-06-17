@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/children-story.schema.json",
+  "title": "Children's story spec",
+  "description": "Machine-read spec for a children's story, written next to the story file as <basename>.spec.json. Declares the target age band, the educational takeaway, and the safety boundaries. The deterministic readability gate (scripts/check-readability.mjs) reads age_band to select word-count / sentence-length bounds (overridable via readability) and enforces safety.avoid. This is the children-story analogue of the SEO research sidecar / the novel state file: structured intent the gate can check.",
+  "type": "object",
+  "required": ["story_id", "age_band", "language", "educational_point", "safety"],
+  "additionalProperties": true,
+  "properties": {
+    "story_id": { "type": "string", "minLength": 1, "description": "Stable id, e.g. the story file basename." },
+    "title": { "type": "string", "minLength": 1 },
+    "age_band": {
+      "type": "string",
+      "enum": ["3-5", "6-8", "9-12"],
+      "description": "Target reader age. Selects the readability bounds in check-readability.mjs."
+    },
+    "language": { "type": "string", "minLength": 2, "description": "BCP-47-ish, e.g. 'en', 'zh'." },
+    "theme": { "type": "string", "description": "One-line theme, e.g. 'courage', 'sharing', 'curiosity'." },
+    "educational_point": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The single concrete takeaway the story teaches. Required — a children's story without a clear point is just noise."
+    },
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "role": { "type": "string", "description": "e.g. 'protagonist', 'friend', 'gentle antagonist'." },
+          "trait": { "type": "string" }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "description": "Child-safety boundaries the gate enforces deterministically.",
+      "required": ["avoid"],
+      "properties": {
+        "avoid": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Terms/topics that must NOT appear in the prose (case-insensitive substring match by the gate). Seed with age-inappropriate content for the band (e.g. graphic violence, weapons, scary death). An empty array is allowed but discouraged."
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "readability": {
+      "type": "object",
+      "description": "OPTIONAL per-story override of the age-band defaults the gate carries. Omit to use the band defaults.",
+      "properties": {
+        "word_count": {
+          "type": "object",
+          "properties": {
+            "min": { "type": "integer" },
+            "max": { "type": "integer" }
+          }
+        },
+        "max_avg_sentence_words": { "type": "number" },
+        "max_sentence_words": { "type": "number" }
+      }
+    }
+  }
+}

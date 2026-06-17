@@ -1,0 +1,25 @@
+{
+  "content_id": "how-to-write-a-novel-with-ai",
+  "content_type": "seo-article",
+  "language": "en",
+  "reviewed_at": "2026-06-08T03:10:00Z",
+  "reviewers": ["content-review", "seo-editor", "copyright-risk-reviewer"],
+  "publishable": true,
+  "copyright_risk": "low",
+  "monetization": "ads",
+  "scores": { "intent_match": 9, "differentiation": 9, "structure": 9, "honesty": 9 },
+  "must_fix": [],
+  "should_fix": [],
+  "nice_to_have": [
+    "If a worldbuilding cluster post (A6) ships, add a 5th post_link at the Stage 2 'develop the world in parallel' hook.",
+    "Copyright/legal facts move fast — re-verify current US Copyright Office guidance before any major refresh.",
+    "Once ZH-native siblings exist for the cluster, consider cross-linking; none added yet to avoid dead links."
+  ],
+  "metadata": {
+    "title": "How to Write a Novel with AI: An Honest 2026 Workflow",
+    "description": "A practical, tool-agnostic workflow for writing a novel with AI in 2026: premise, outline, characters, drafting, consistency, revision, plus the copyright reality.",
+    "tags": ["how to write a novel with ai", "ai novel writing", "ai for fiction writers", "ai writing workflow", "write a book with ai"],
+    "categories": ["AI Writing", "How-To"],
+    "slug": "how-to-write-a-novel-with-ai"
+  }
+}

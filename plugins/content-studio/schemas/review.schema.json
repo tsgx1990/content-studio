@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/review.schema.json",
+  "title": "Content review sidecar",
+  "description": "Written next to a content file as <basename>.review.json by the content-review skill.",
+  "type": "object",
+  "required": ["content_id", "reviewed_at", "publishable", "copyright_risk", "metadata"],
+  "additionalProperties": true,
+  "properties": {
+    "content_id": { "type": "string", "description": "Stable id, e.g. the content file basename." },
+    "content_type": { "type": "string", "examples": ["seo-article", "novel-chapter"] },
+    "reviewed_at": { "type": "string", "format": "date-time" },
+    "reviewers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Which skills/subagents contributed, e.g. seo-editor, copyright-risk-reviewer."
+    },
+    "publishable": {
+      "type": "boolean",
+      "description": "Hard gate. Must be true to publish. False => revise first."
+    },
+    "copyright_risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "Hard gate. 'high' blocks publishing."
+    },
+    "monetization": {
+      "type": "string",
+      "enum": ["ads", "affiliate", "lead", "none"],
+      "description": "How this content monetizes. If 'affiliate', the gate requires an FTC disclosure in the content."
+    },
+    "scores": {
+      "type": "object",
+      "description": "Optional human-facing scores. NOT used as a gate (LLM floats are unstable).",
+      "additionalProperties": { "type": "number" }
+    },
+    "must_fix": { "type": "array", "items": { "type": "string" } },
+    "should_fix": { "type": "array", "items": { "type": "string" } },
+    "nice_to_have": { "type": "array", "items": { "type": "string" } },
+    "metadata": {
+      "type": "object",
+      "description": "Publish metadata the gate checks for presence (per config/publish.json frontMatter.required).",
+      "required": ["title", "description", "tags"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "tags": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "categories": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

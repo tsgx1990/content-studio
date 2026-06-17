@@ -1,0 +1,22 @@
+{
+  "content_id": "3-free-ai-writing-tools-for-novelists",
+  "content_type": "youtube-script",
+  "reviewed_at": "2026-06-06T09:20:00.000Z",
+  "reviewers": ["content-review", "seo-editor"],
+  "publishable": true,
+  "copyright_risk": "low",
+  "monetization": "ads",
+  "scores": { "hook_strength": 8, "structure": 9, "pacing_fit": 9, "intent_match": 9 },
+  "must_fix": [],
+  "should_fix": [],
+  "nice_to_have": [
+    "If the description links the article with an affiliate link, switch monetization to 'affiliate' and add an FTC disclosure (the publish gate enforces it)."
+  ],
+  "metadata": {
+    "title": "How to Pick a Genuinely Free AI Writing Tool (for Novelists)",
+    "description": "A 75-second guide for novelists: how to tell a real free AI writing tool from a trial in disguise — free tier vs trial, who owns your words, and the monthly word caps.",
+    "tags": ["ai-writing", "youtube-script", "writing-tools", "novelists"],
+    "categories": ["Video", "AI Writing"],
+    "slug": "3-free-ai-writing-tools-for-novelists-script"
+  }
+}

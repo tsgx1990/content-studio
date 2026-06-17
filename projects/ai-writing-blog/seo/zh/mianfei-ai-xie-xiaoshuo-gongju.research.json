@@ -1,0 +1,58 @@
+{
+  "primary_keyword": "免费AI写小说软件",
+  "language": "zh",
+  "source": "web-search",
+  "data_quality": "estimated",
+  "researched_at": "2026-06-06T10:30:00+08:00",
+  "search_volume": null,
+  "difficulty": "high",
+  "search_intent": "commercial",
+  "serp_snapshot": [
+    { "position": 1, "title": "2026实测推荐：10款免费好用的AI写小说软件（亲测防坑指南）", "url": "https://www.sohu.com/a/990792084_414124", "format": "tested-listicle", "notes": "搜狐；10款实测，覆盖笔灵AI/DeepSeek/Kimi/文心一言/豆包/百度作家平台/星火网文助手/NovelAI。主流模板。" },
+    { "position": 2, "title": "AI写小说神器怎么选？10款免费写小说软件推荐(2025最新实测)", "url": "https://aitool.csdn.net/68ee05ea8867235e1391bc3e.html", "format": "tested-listicle", "notes": "CSDN；DeepSeek/笔灵/豆包/Kimi/文心一言/ChatGPT/Claude/元宝。" },
+    { "position": 3, "title": "免费可用！亲测10个AI写小说软件，建议收藏（附保姆级实测）", "url": "https://zhuanlan.zhihu.com/p/1966855875684697687", "format": "tested-listicle", "notes": "知乎；明确指出 ChatGPT 免费版长篇‘失忆’、需特殊网络；力荐笔灵(网文垂类)。" },
+    { "position": 4, "title": "12款免费好用的AI写小说软件实测体验", "url": "https://zhuanlan.zhihu.com/p/1991883374525183633", "format": "tested-listicle", "notes": "知乎；笔灵主打网文爆款公式，反通用AI‘翻译腔’。" },
+    { "position": 5, "title": "10个免费AI小说写作软件和网站，网文剧本创作神器", "url": "https://ai-bot.cn/ai-novel-writing-tools/", "format": "directory-listicle", "notes": "AI工具集导航；彩云小梦、墨狐AI(网文/转剧本)等垂类工具目录。" }
+  ],
+  "related_queries": [
+    "ai写小说的软件免费",
+    "免登录的ai写作软件",
+    "ai写小说软件哪个好用",
+    "免费写小说软件生成器",
+    "蛙蛙写作 免费",
+    "笔灵ai 免费",
+    "ai写小说免费 无限制"
+  ],
+  "secondary_keywords": [
+    { "keyword": "免费ai写小说工具", "volume": null, "intent": "commercial" },
+    { "keyword": "ai写小说软件哪个好用", "volume": null, "intent": "commercial" },
+    { "keyword": "免费ai小说生成器", "volume": null, "intent": "commercial" }
+  ],
+  "must_cover_entities": [
+    "笔灵AI (ibiling.cn — 网文垂类：AI全篇创作 / 大纲 / 站内云端保存；免费注册起步)",
+    "DeepSeek (国产大模型，网页端基本免费；逻辑/结构强，适合搭骨架)",
+    "豆包 (字节，免费、响应快)",
+    "Kimi (月之暗面，长上下文，适合拆书/分析长文，免费档)",
+    "文心一言 (百度，中文表达自然，免费)",
+    "腾讯元宝 (新手友好，免费)",
+    "蛙蛙写作 (网文平台：蛙币奖励 / 文风切换 / 可投稿签约；有免费档)",
+    "ChatGPT / Claude (通用模型，有免费档，但中国访问需特殊网络 — 须诚实标注)",
+    "番茄小说AI助手 / 百度作家平台 / 星火网文助手 (平台自带的网文辅助)"
+  ],
+  "verified_facts": [
+    "据多篇中文实测综述：DeepSeek、豆包、Kimi、文心一言、腾讯元宝等国产大模型网页端‘基本免费可用’，无需自备API Key——这与英文市场‘free unlimited 多为 BYO-key’的情形显著不同。",
+    "笔灵AI 定位网文垂类，主打 AI 全篇创作 + 大纲、站内云端保存，免费注册起步（深度/额度以官网为准）。",
+    "蛙蛙写作 为网文创作平台，提供蛙币奖励、文风切换，并有投稿/签约路径。",
+    "多篇综述指出 ChatGPT 免费版(GPT-3.5)在长篇(>1万字)存在‘失忆’、设定记不住的问题；且中国大陆访问 ChatGPT/Claude 需特殊网络。",
+    "注：以上为对中文 SERP 综述内容的观察(data_quality: estimated)，具体免费额度/功能随官网政策变动，文中均提醒以官网为准、不臆造数字。"
+  ],
+  "content_gaps": [
+    "几乎所有中文‘10款实测’都把三类‘免费’混为一谈：(a) 真免费的通用国产大模型、(b) 网文垂类工具的免费额度/蛙币、(c) 免费软件但需自接API付费(BYO)。没人先把‘免费’讲清楚。",
+    "缺少面向中国读者的访问诚实提醒：国产模型免费且无需翻墙，而 ChatGPT/Claude 需特殊网络——多数榜单照搬英文工具却不提这点。",
+    "很少区分‘能试用’与‘能写完一整本’：长文本‘失忆’决定了哪些工具只适合起稿、哪些适合长篇连载。"
+  ],
+  "recommended_angle": "把英文母版的‘三种免费’分类法移植并按中国市场重做：先讲清‘免费’的三种含义，再把真实的中文工具分桶——(1) 真免费的国产大模型(DeepSeek/豆包/Kimi/文心/元宝)，(2) 网文垂类工具的免费档/蛙币(笔灵/蛙蛙写作)，(3) 免费软件但自接API付费(BYO，技术党)。补上‘中国访问’与长文本‘失忆’两个诚实提醒，最后给‘按需求选’清单。分类法 + 本地化诚实提醒，是现有榜单都缺的差异点。",
+  "monetization_fit": "ads",
+  "decision": "pursue",
+  "reason": "中文母题‘免费AI写小说软件’需求量大、榜单极多(difficulty: high)，但同质化严重——全是把工具堆在一起的‘10款实测’，没人先把‘免费’的三种含义讲清楚，也没人给中国访问与长文本‘失忆’的诚实提醒。把英文母版的分类法移植 + 按中国真实工具重做 + 本地化诚实提醒，构成真实差异点。变现在中文侧以广告/导流为主(affiliate 弱)，故 monetization_fit=ads。这是一篇市场原生(非翻译)的文章。"
+}

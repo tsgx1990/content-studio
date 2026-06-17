@@ -1,0 +1,28 @@
+{
+  "content_id": "best-free-ai-writing-tools-for-novelists",
+  "content_type": "seo-article",
+  "reviewed_at": "2026-06-05T16:10:00+08:00",
+  "reviewers": ["content-review", "seo-editor", "copyright-risk-reviewer"],
+  "publishable": true,
+  "copyright_risk": "low",
+  "monetization": "affiliate",
+  "scores": { "overall": 8.5, "intent_match": 9, "structure": 9, "originality": 8 },
+  "must_fix": [],
+  "should_fix": [
+    "Verify each tool's current free-tier limits before publish (caps change); limits labeled 'as observed'."
+  ],
+  "nice_to_have": [
+    "Add internal link from the future Pillar 2 (best AI writing tools) once it exists.",
+    "Consider a small comparison table of the free options by 'free type'."
+  ],
+  "notes": {
+    "seo_editor": "Intent match full. Differentiates via the three-kinds-of-free taxonomy (the SERP gap), covers the real entities with real limits, internal-links to B2. Title concise; description ~175 chars, tightened below.",
+    "copyright_risk_reviewer": "Low. Tool names used nominatively/factually; no copied copy; 'free unlimited' framed honestly. Affiliate disclosure present at top."
+  },
+  "metadata": {
+    "title": "Best Free AI Writing Tools for Novelists (2026)",
+    "description": "The best free AI writing tools for novelists — plus what 'free' really means (free tier vs BYO-key), with real limits for RaptorWrite, Squibler, Inkfluence AI and Claude.",
+    "tags": ["free ai writing tools", "novel writing", "raptorwrite", "squibler"],
+    "categories": ["reviews", "ai-writing-tools"]
+  }
+}

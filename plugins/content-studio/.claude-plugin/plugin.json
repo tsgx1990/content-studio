@@ -1,0 +1,23 @@
+{
+  "name": "content-studio",
+  "displayName": "Content Studio",
+  "version": "0.1.0",
+  "description": "An AI content studio for Claude Code: plan, research, draft, review, and publish content (SEO articles, long-form fiction, kids' stories, YouTube/Xiaohongshu/short-drama scripts, and more) through deterministic, zero-dependency gates that refuse to ship keyword-stuffed, fabricated, or non-compliant content.",
+  "author": {
+    "name": "tsgx1990",
+    "url": "https://github.com/tsgx1990"
+  },
+  "homepage": "https://github.com/tsgx1990/content-studio",
+  "repository": "https://github.com/tsgx1990/content-studio",
+  "license": "Apache-2.0",
+  "keywords": [
+    "content",
+    "writing",
+    "seo",
+    "editorial",
+    "review",
+    "compliance",
+    "skills",
+    "agents"
+  ]
+}

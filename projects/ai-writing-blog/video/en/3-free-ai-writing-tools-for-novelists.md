@@ -1,0 +1,40 @@
+# How to Pick a Genuinely Free AI Writing Tool (Novelists)
+
+> Keyword: best free ai writing tools for novelists · target 75s · est. 70s · ~176 words
+
+## Hook  (hook)
+
+Most so-called free AI writing tools for novelists are just trials in disguise. Here's how to spot the ones that are actually free, and actually useful.
+
+> [VISUAL: Hard cut, text on screen: "FREE?" with a strikethrough.]
+
+## Why it matters  (intro)
+
+If you're drafting a novel on a budget, the right free tool saves you real hours. The wrong one quietly locks your finished manuscript behind a paywall, right when you hit your stride.
+
+> [VISUAL: B-roll: someone typing, then a paywall modal slides up.]
+
+## 1. A real free tier  (segment)
+
+First, look for a genuine free tier, not a seven-day trial. A real free tier lets you draft, edit, and export your work without ever entering a card number.
+
+> [VISUAL: Screen recording: a pricing page; highlight the free column.]
+
+## 2. Who owns your words  (segment)
+
+Second, check who owns your words. Read the terms: a good tool keeps your manuscript yours and lets you export clean text any time you like, in a normal format like Word or plain text.
+
+> [VISUAL: Zoom on a terms-of-service line about content ownership and export.]
+
+## 3. The word limits  (segment)
+
+Third, watch the word limits. Many free plans cap how much AI text you can generate each month, so match the cap to how fast you actually write.
+
+> [VISUAL: Simple bar: monthly cap vs. your typical word count.]
+
+## Call to action  (cta)
+
+I put the full shortlist, with each tool's real free-tier limits, in the description. Grab it, and subscribe if you want the no-hype tool reviews.
+
+> [VISUAL: End card: subscribe button + link to the blog article.]
+

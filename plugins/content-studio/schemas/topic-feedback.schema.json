@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/topic-feedback.schema.json",
+  "title": "Topic-feedback sidecar",
+  "description": "Written by build-topic-feedback.mjs from a project's REAL analytics export (Google Search Console / GA4 CSV) joined to publish-log.jsonl. content-strategy consumes it as EVIDENCE for the next series plan — every suggestion is a proposal that stays unvalidated until keyword-research confirms it with real SERP data. Never fabricated: every metric comes from the export; unknown = null, never 0.",
+  "type": "object",
+  "required": ["project", "source", "data_quality", "generated_at", "inputs", "published_performance", "opportunities", "suggestions"],
+  "additionalProperties": true,
+  "properties": {
+    "project": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "string",
+      "description": "Where the analytics came from. Mirrors keyword-research's honesty contract.",
+      "pattern": "^(gsc-export|ga4-export|manual)$"
+    },
+    "data_quality": {
+      "type": "string",
+      "enum": ["measured", "estimated"],
+      "description": "measured = real numbers from an export; estimated = inferred. NEVER label a guess 'measured'."
+    },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "window": {
+      "type": ["string", "null"],
+      "description": "Date range covered by the export if the user recorded it; null otherwise. Do not fabricate."
+    },
+    "inputs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "The CSV export file(s) this was built from (paths relative to the project)."
+    },
+    "thresholds": {
+      "type": "object",
+      "description": "The policy thresholds used to classify rows, recorded so the verdicts are reproducible.",
+      "additionalProperties": true
+    },
+    "published_performance": {
+      "type": "array",
+      "description": "One row per published article (joined from publish-log.jsonl). Metrics are null when the export does not mention the page — null means 'not seen', never 0.",
+      "items": {
+        "type": "object",
+        "required": ["content_id", "verdict"],
+        "additionalProperties": true,
+        "properties": {
+          "content_id": { "type": "string" },
+          "url": { "type": ["string", "null"] },
+          "clicks": { "type": ["integer", "null"] },
+          "impressions": { "type": ["integer", "null"] },
+          "ctr": { "type": ["number", "null"] },
+          "position": { "type": ["number", "null"] },
+          "verdict": {
+            "type": "string",
+            "enum": ["winner", "underperformer", "low-data", "neutral"],
+            "description": "winner = proven clicks; underperformer = seen a lot but ~no clicks (title/intent mismatch); low-data = not enough impressions to judge (incl. not-in-export); neutral = otherwise."
+          }
+        }
+      }
+    },
+    "opportunities": {
+      "type": "array",
+      "description": "Queries the site already gets impressions for but does not own (high impressions, low CTR or weak position) and that no published article targets. New-topic candidates — still unvalidated.",
+      "items": {
+        "type": "object",
+        "required": ["query"],
+        "additionalProperties": true,
+        "properties": {
+          "query": { "type": "string" },
+          "impressions": { "type": ["integer", "null"] },
+          "clicks": { "type": ["integer", "null"] },
+          "ctr": { "type": ["number", "null"] },
+          "position": { "type": ["number", "null"] },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "suggestions": {
+      "type": "array",
+      "description": "Deterministic, evidence-backed next-action proposals for content-strategy. Proposals only — every one must be confirmed by keyword-research before drafting.",
+      "items": {
+        "type": "object",
+        "required": ["type", "rationale"],
+        "additionalProperties": true,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["double-down", "revise", "new-topic"],
+            "description": "double-down = make more like a winner; revise = rewrite an underperformer's title/intent; new-topic = pursue an opportunity query."
+          },
+          "target": { "type": "string", "description": "The content_id (double-down/revise) or query (new-topic) the suggestion is about." },
+          "rationale": { "type": "string" },
+          "evidence": { "type": "object", "additionalProperties": true },
+          "status": {
+            "type": "string",
+            "enum": ["unvalidated"],
+            "description": "Always 'unvalidated' — keyword-research must confirm real demand before any drafting."
+          }
+        }
+      }
+    },
+    "notes": { "type": "string" }
+  }
+}

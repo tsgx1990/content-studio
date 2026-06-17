@@ -1,0 +1,20 @@
+{
+  "name": "content-studio",
+  "owner": {
+    "name": "tsgx1990",
+    "url": "https://github.com/tsgx1990"
+  },
+  "metadata": {
+    "description": "Content Studio — an AI content pipeline (skills + agents + deterministic gates) for Claude Code.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "content-studio",
+      "source": "./plugins/content-studio",
+      "description": "Plan, research, draft, review, and publish content through deterministic, zero-dependency gates. Ships content-type skills (SEO, long-form fiction, kids' stories, YouTube/Xiaohongshu/short-drama scripts, graded readers, interactive/game/audio stories), editorial subagents, and the gate scripts that enforce the workflow.",
+      "category": "productivity",
+      "keywords": ["content", "writing", "seo", "review", "compliance"]
+    }
+  ]
+}

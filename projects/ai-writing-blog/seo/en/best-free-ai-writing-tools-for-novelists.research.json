@@ -1,0 +1,54 @@
+{
+  "primary_keyword": "best free AI writing tools for novelists",
+  "language": "en",
+  "source": "web-search",
+  "data_quality": "estimated",
+  "researched_at": "2026-06-05T16:00:00+08:00",
+  "search_volume": null,
+  "difficulty": "medium",
+  "search_intent": "commercial",
+  "serp_snapshot": [
+    { "position": 1, "title": "Best Free AI Book Writing Tools in 2026: 9 Options Tested", "url": "https://www.inkfluenceai.com/blog/best-free-ai-book-writing-tools-2026", "format": "tested-listicle", "notes": "Direct match, hands-on '9 options tested'." },
+    { "position": 2, "title": "Best Writing Tools for Fiction Authors (2026): AI and Beyond", "url": "https://www.laterpress.com/craft-of-writing/best-ai-writing-tools-for-fiction/", "format": "listicle", "notes": "Broad roundup, ranks for free too." },
+    { "position": 3, "title": "15 Best AI Writing Tools for Authors", "url": "https://kindlepreneur.com/best-ai-writing-tools/", "format": "authority-listicle", "notes": "Authority domain again." },
+    { "position": 4, "title": "Best AI Novel Writer Free Unlimited for Fiction in 2026", "url": "https://sudowrite.com/blog/best-ai-novel-writer-free-unlimited-for-fiction-in-2026/", "format": "listicle (vendor)", "notes": "Vendor ranking on 'free unlimited' — angle to fact-check honestly." },
+    { "position": 5, "title": "I tried 5 tools to find the best AI book writer free in 2026", "url": "https://www.eesel.ai/blog/best-ai-book-writer-free", "format": "tested-listicle", "notes": "First-person test." }
+  ],
+  "related_queries": [
+    "best free AI book writer",
+    "free AI novel generator",
+    "is there a free AI for writing fiction",
+    "RaptorWrite free",
+    "Squibler free tier limits",
+    "free AI story generator no sign up"
+  ],
+  "secondary_keywords": [
+    { "keyword": "free AI novel generator", "volume": null, "intent": "commercial" },
+    { "keyword": "best free AI book writer", "volume": null, "intent": "commercial" },
+    { "keyword": "RaptorWrite review", "volume": null, "intent": "commercial" }
+  ],
+  "must_cover_entities": [
+    "RaptorWrite (Future Fiction Academy — free software, BYO key via OpenRouter)",
+    "Toolsaday Novel Studio (free forever)",
+    "Inkfluence AI (free export of structured book)",
+    "Squibler (free tier: 6,000 AI words/mo, 15 files)",
+    "Claude (free tier — strong prose)",
+    "Hemingway Editor (free web), Grammarly free"
+  ],
+  "verified_facts": [
+    "RaptorWrite (RaptorWrite 1.0, Future Fiction Academy): software is free; AI runs through OpenRouter so you pay model providers' rates (BYO key). Base model stays free; premium planned.",
+    "Squibler free tier: 6,000 AI words/month + editing for 15 files; also a no-sign-up free story generator.",
+    "Toolsaday Novel Studio: advertised free forever.",
+    "Inkfluence AI: free export of a structured book (outline + per-chapter + cover/TOC).",
+    "Claude free tier: strong fiction prose, generous for conversation."
+  ],
+  "content_gaps": [
+    "Nobody clearly separates the THREE kinds of 'free': (a) truly free, (b) free TIER of a paid tool (word caps), (c) free SOFTWARE but you pay AI usage via your own key (BYO). This is the article's core differentiator.",
+    "Honest caveat that 'free unlimited' often = BYO-key (you still pay the model).",
+    "Which free option is best for actually finishing a draft vs just trying it out."
+  ],
+  "recommended_angle": "Lead with a taxonomy of 'free' (truly free / free tier / free-but-BYO-key), then sort the real tools into those buckets with their real limits, then a 'best free pick for X' section. The taxonomy is the gap every existing result leaves open.",
+  "monetization_fit": "affiliate",
+  "decision": "pursue",
+  "reason": "Medium difficulty and a clear differentiation gap. The SERP mixes a vendor post ranking on 'free unlimited' (which is misleading — many are BYO-key) and generic roundups; an honest taxonomy of what 'free' actually means, with real per-tool limits, is genuinely more useful and links naturally to the paid comparison (B2). Good authority-building entry point alongside B2."
+}

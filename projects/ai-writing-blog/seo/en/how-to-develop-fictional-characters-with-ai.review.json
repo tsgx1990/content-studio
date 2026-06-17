@@ -1,0 +1,24 @@
+{
+  "content_id": "how-to-develop-fictional-characters-with-ai",
+  "content_type": "seo-article",
+  "language": "en",
+  "reviewed_at": "2026-06-07T07:45:00Z",
+  "reviewers": ["content-review", "seo-editor", "copyright-risk-reviewer"],
+  "publishable": true,
+  "copyright_risk": "low",
+  "monetization": "ads",
+  "scores": { "intent_match": 9, "differentiation": 9, "structure": 9, "honesty": 9 },
+  "must_fix": [],
+  "should_fix": [],
+  "nice_to_have": [
+    "Tool/free-tier facts (Sudowrite/NovelCrafter consistency features) move fast — re-verify before any major refresh.",
+    "Once a ZH-native sibling exists, consider cross-linking; none exists yet, so no link added (avoid dead links)."
+  ],
+  "metadata": {
+    "title": "How to Develop Fictional Characters with AI (2026)",
+    "description": "Develop fictional characters with AI using a repeatable 4-step prompt workflow (interview, contradiction, voice, consistency) and avoid the generic AI character.",
+    "tags": ["ai character development", "fiction writing", "chatgpt for writers", "novel characters"],
+    "categories": ["AI Writing", "How-To"],
+    "slug": "how-to-develop-fictional-characters-with-ai"
+  }
+}

@@ -1,0 +1,14 @@
+id: ai-writing-blog
+title: AI Writing Blog
+type: seo-article
+language: en
+status: active
+platforms:
+  - website
+content_policy:
+  copyright_risk: strict
+  child_safety: false
+quality:
+  require_review: true
+publish:
+  target: hexo # see config/publish.json

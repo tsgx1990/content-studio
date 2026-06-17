@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/short-drama.schema.json",
+  "title": "Short drama (微短剧 / 竖屏短剧) script",
+  "description": "Machine-read source of truth for a serialized vertical micro-drama, at projects/{slug}/drama/{lang}/{slug}.drama.json. Episodes are an ordered list; each episode has beats (role-tagged micro-structure) and a mandatory end-of-episode cliffhanger. A human-facing preview is rendered into a sibling .md. The deterministic gate (scripts/check-short-drama.mjs) enforces the genre's reproducible structure/pacing/compliance facts (grounded in docs/research/2026-06-06-short-drama-structure.md): episode 1 opens on a hook, EVERY episode ends on a non-empty cliffhanger, episode numbers are 1-based/contiguous/unique, the paywall episode (if set) resolves and is not last, per-episode spoken runtime is within tolerance of target, and a synopsis exists. 'Is it a hit / enough reversals / value orientation' is content-review's job, not the gate's. Topic should reuse keyword-research (never invent demand).",
+  "type": "object",
+  "required": ["drama_id", "title", "episodes"],
+  "additionalProperties": true,
+  "properties": {
+    "drama_id": { "type": "string", "minLength": 1 },
+    "title": { "type": "string", "minLength": 1, "description": "剧名 / working title." },
+    "language": { "type": "string", "minLength": 2, "description": "Primary market language (e.g. 'zh')." },
+    "genre": { "type": "string", "description": "题材：甜宠/逆袭/复仇/战神/悬疑/穿越… (content-review judges fit; not gated)." },
+    "synopsis": { "type": "string", "description": "内容概要 (剧情梗概). 备案 wants ≥500字; the gate enforces a configurable min (default 100)." },
+    "keyword": { "type": "string", "description": "Target topic/keyword, ideally backed by a *.research.json with decision: pursue." },
+    "target_seconds_per_episode": { "type": "integer", "description": "竖屏单集目标时长(秒). The gate checks each episode's estimated spoken runtime is within tolerance of this. Default 90 (gate)." },
+    "spoken_cpm": { "type": "number", "description": "Spoken chars-per-minute for the runtime estimate (ZH speech ~240). Default 240 (gate)." },
+    "tolerance": { "type": "number", "description": "Allowed fraction over/under target per episode. Default 0.5 (gate) — script-word timing is coarse." },
+    "min_episodes": { "type": "integer", "description": "Minimum episode count to count as a serialized drama. Default 2 (gate)." },
+    "min_synopsis_chars": { "type": "integer", "description": "Minimum synopsis length. Default 100 (gate); set 500 to mirror 备案." },
+    "paywall_episode": { "type": "integer", "description": "1-based index of the 付费卡点 episode. If set, must resolve to a real episode and must NOT be the last one (paywall mid-series)." },
+    "episodes": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Ordered episodes. Episode 1's first beat must be role 'hook'; EVERY episode must have a non-empty cliffhanger.",
+      "items": {
+        "type": "object",
+        "required": ["number", "beats", "cliffhanger"],
+        "properties": {
+          "number": { "type": "integer", "description": "1-based episode number; must be contiguous and unique across the series." },
+          "title": { "type": "string", "description": "Short episode label (shown as a heading in the rendered doc)." },
+          "beats": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Ordered intra-episode beats (the micro three-act). Episode 1's FIRST beat must be role 'hook'.",
+            "items": {
+              "type": "object",
+              "required": ["role", "summary"],
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "enum": ["hook", "setup", "escalation", "twist", "payoff"],
+                  "description": "hook = 黄金前3秒强冲突; setup = 铺垫; escalation = 冲突升级; twist = 反转; payoff = 爽点/情绪释放."
+                },
+                "summary": { "type": "string", "minLength": 1, "description": "What happens in this beat (scene/action)." },
+                "lines": { "type": "string", "description": "对白/旁白 spoken text. Char count drives the runtime estimate; action-only beats may omit it." }
+              }
+            }
+          },
+          "cliffhanger": { "type": "string", "minLength": 1, "description": "结尾钩子 — the end-of-episode suspense that drives the next click. MUST be non-empty (the genre's #1 rule)." }
+        }
+      }
+    }
+  }
+}

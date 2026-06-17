@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/xhs-post.schema.json",
+  "title": "Xiaohongshu (XHS) note",
+  "description": "Machine-read source of truth for a Xiaohongshu (小红书) image-text note, at projects/{slug}/xhs/{lang}/{slug}.note.json. The reader-facing preview is rendered from this into a sibling .md. The deterministic note gate (scripts/check-xhsnote.mjs) enforces XHS platform limits (title <= 20 chars, body 100-1000 chars, tag count) and a banned absolute-claim word scan (极限词 trigger 限流). Topic selection should reuse the SEO keyword-research entry point (a *.research.json with decision: pursue) — never invent demand. Rules grounded in docs/research/2026-06-06-xiaohongshu-note-rules.md.",
+  "type": "object",
+  "required": ["note_id", "title", "body", "tags"],
+  "additionalProperties": true,
+  "properties": {
+    "note_id": { "type": "string", "minLength": 1 },
+    "language": { "type": "string", "minLength": 2 },
+    "platform": { "type": "string", "description": "Always 'xiaohongshu' for this type." },
+    "keyword": { "type": "string", "description": "The topic (ideally backed by a *.research.json with decision: pursue)." },
+    "title": { "type": "string", "minLength": 1, "description": "Note title. XHS truncates past 20 chars; the gate enforces the cap." },
+    "body": { "type": "string", "minLength": 1, "description": "Note body (emoji + line breaks welcome). Gate enforces 100-1000 chars." },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Topic tags WITHOUT the leading # (the renderer adds it). 1..max_tags (default 10; XHS hard cap 30).",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "cover_hint": { "type": "string", "description": "Optional note on the cover image (not gated)." },
+    "images_hint": { "type": "integer", "description": "Optional planned image count (XHS suggests 3-9)." },
+    "limits": {
+      "type": "object",
+      "description": "OPTIONAL per-note override of the gate defaults (platform rules change — keep these tunable).",
+      "properties": {
+        "title_min": { "type": "integer" },
+        "title_max": { "type": "integer" },
+        "body_min": { "type": "integer" },
+        "body_max": { "type": "integer" },
+        "max_tags": { "type": "integer" }
+      }
+    },
+    "banned_terms": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "OPTIONAL override of the default 极限词 (absolute-claim) blocklist the gate scans for."
+    },
+    "diversion_terms": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "OPTIONAL override of the default 导流 (off-platform contact-info) blocklist — 微信/QQ/二维码/公众号 etc. that trigger 限流/封号. Pass [] to disable the scan."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "content_id": "mianfei-ai-xie-xiaoshuo",
+  "content_type": "xhs-post",
+  "language": "zh",
+  "reviewed_at": "2026-06-06T12:00:00+08:00",
+  "reviewers": ["content-review", "seo-editor", "copyright-risk-reviewer"],
+  "publishable": true,
+  "copyright_risk": "low",
+  "monetization": "none",
+  "scores": { "hook": 8, "native_voice": 9, "honesty": 9, "compliance": 9 },
+  "must_fix": [],
+  "should_fix": [],
+  "nice_to_have": [
+    "发布前用 SearXNG 复核各工具当时的免费政策；若改为带货笔记，需把 monetization 改为 affiliate 并按平台规则声明合作/广告。"
+  ],
+  "metadata": {
+    "title": "免费AI写小说，这5个够用了✍️",
+    "description": "小红书种草笔记：把『免费AI写小说软件』按真免费/免费档/自接API三类讲清楚，附 DeepSeek、笔灵AI、蛙蛙写作等真实工具与中国访问诚实提醒。",
+    "tags": ["AI写小说", "AI写作工具", "免费工具", "网文", "写作干货"],
+    "categories": ["小红书", "AI写作"],
+    "slug": "mianfei-ai-xie-xiaoshuo-xhs"
+  }
+}

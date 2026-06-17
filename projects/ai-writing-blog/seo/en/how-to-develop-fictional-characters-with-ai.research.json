@@ -1,0 +1,79 @@
+{
+  "primary_keyword": "how to develop fictional characters with AI",
+  "language": "en",
+  "source": "web-search",
+  "data_quality": "estimated",
+  "researched_at": "2026-06-07T07:35:00Z",
+  "search_volume": null,
+  "difficulty": "med",
+  "search_intent": "informational",
+  "serp_snapshot": [
+    {
+      "title": "How to Develop Fictional Characters with AI: From Concept to Consistency (Sudowrite)",
+      "url": "https://sudowrite.com/blog/how-to-develop-fictional-characters-with-ai-sudowrites-characters-feature/",
+      "format": "how-to",
+      "notes": "Vendor blog for the on-niche query. Owns the 'character consistency across a novel-length manuscript' angle and the stored-voice-profile solution. The strongest writing-side result; tool-led."
+    },
+    {
+      "title": "Using AI to Develop and Workshop Your Characters (Writer's Digest)",
+      "url": "https://www.writersdigest.com/write-better-fiction/using-ai-to-develop-and-workshop-your-characters",
+      "format": "how-to",
+      "notes": "High-authority craft voice (award-winning author). Treats AI as a workshop partner; honest about where it falls short. Craft-first, no tool funnel."
+    },
+    {
+      "title": "How to Use AI for Character Development in Fiction Writing (NinjaChat)",
+      "url": "https://www.ninjachat.ai/blog/ai-for-character-development-in-fiction-writing",
+      "format": "how-to",
+      "notes": "Concrete technique-level guide (map a relationship dynamic, design three arc beats). Actionable but tool-promoting."
+    },
+    {
+      "title": "The 11 Best ChatGPT Prompts to Develop Characters for Your Books (MakeUseOf)",
+      "url": "https://www.makeuseof.com/chatgpt-prompts-to-develop-book-characters/",
+      "format": "listicle",
+      "notes": "Prompt-list format. Ranks for the ChatGPT-prompt variant. A one-off prompt dump, not a repeatable workflow."
+    },
+    {
+      "title": "Creating Convincing AI Characters (SpecFicWriters)",
+      "url": "https://specficwriters.com/creating-convincing-ai-characters/",
+      "format": "how-to",
+      "notes": "Note intent split: this is about writing an AI as a CHARACTER in the story, not using AI to build human characters. Same words, different intent."
+    },
+    {
+      "title": "Free AI Character Generator (Canva / Fotor / Adobe Firefly / OpenArt)",
+      "url": "https://www.canva.com/ai-character-generator/",
+      "format": "product",
+      "notes": "DOMINATES the bare keyword 'how to create characters with AI'. Image/avatar generation intent — visual, not narrative. The reason the head keyword is the wrong target for a writing blog."
+    },
+    {
+      "title": "Create a Character | character.ai",
+      "url": "https://character.ai/character/new",
+      "format": "product",
+      "notes": "Chatbot-persona intent. Also contaminates the head keyword. Not novel-character development."
+    }
+  ],
+  "related_queries": [
+    "how to create characters with AI",
+    "use ChatGPT to create character profiles for novel",
+    "best ChatGPT prompts to develop book characters",
+    "AI character development for fiction writing",
+    "how to keep AI characters consistent across a novel",
+    "AI character profile generator for writers",
+    "how to write a novel with ChatGPT characters"
+  ],
+  "secondary_keywords": [
+    { "keyword": "ChatGPT prompts to develop characters", "volume": null, "intent": "informational" },
+    { "keyword": "AI character profile for novel", "volume": null, "intent": "informational" },
+    { "keyword": "keep characters consistent with AI", "volume": null, "intent": "informational" },
+    { "keyword": "AI character development tools for writers", "volume": null, "intent": "commercial" }
+  ],
+  "content_gaps": [
+    "Nobody cleanly separates the two intents that share these words: GENERATING a character image (Canva/Firefly) vs DEVELOPING a character's psychology/voice/arc (the writer's job). Readers land on the wrong type of result constantly — leading with that distinction is an instant differentiation win.",
+    "Existing writing-side pieces are either vendor blogs (Sudowrite's own feature) or generic 'here are 11 prompts' dumps. Gap: a REPEATABLE prompt WORKFLOW (interview -> contradiction -> voice sample -> consistency sheet), not a one-off prompt list.",
+    "The flat/cliche 'AI character' failure mode (every AI character is a brave-but-haunted orphan) is rarely addressed with concrete fixes for pushing past the model's defaults.",
+    "The long-manuscript 'amnesia' / consistency problem is owned by one vendor (Sudowrite) as a product pitch; an honest, tool-neutral explanation of WHEN raw ChatGPT breaks down and what to switch to is missing — and is the natural funnel into Cluster B."
+  ],
+  "recommended_angle": "A craft-first, tool-neutral how-to for novelists: 'How to Develop Fictional Characters with AI (Without Getting a Generic One)'. Open by separating character-IMAGE generation from character-DEVELOPMENT (claims the contaminated head-keyword traffic and re-points it). Give a repeatable copy-paste PROMPT WORKFLOW: (1) the interview, (2) force a contradiction/flaw, (3) generate a voice sample, (4) build a consistency sheet. Call out the flat-AI-character trap with concrete fixes. Then the honest consistency limit of raw ChatGPT on a full manuscript -> funnel to Cluster B tools that store character profiles (Sudowrite / NovelCrafter) and up to Pillar 1. Informational, ads, funnels to affiliate.",
+  "monetization_fit": "ads",
+  "decision": "pursue",
+  "reason": "PURSUE, but the keyword is RE-TARGETED from the content-plan's A2 'how to create characters with AI'. Real SERP shows the bare phrase is dominated by AI image/avatar generators (Canva, Fotor, Adobe Firefly, OpenArt) and chatbot personas (character.ai) — visual/chatbot intent, a poor fit for a novel-writing blog. The writing-native variants ('how to develop fictional characters with AI', 'use ChatGPT to create character profiles for novel') return a rich, on-niche, winnable SERP (blogs + vendor posts, not authority walls) with a clear differentiation gap (intent-split + a repeatable workflow + the flat-character fix). So we pursue the writing-native keyword and treat the head term as a secondary we partly reclaim by leading with the image-vs-development distinction. This intent mismatch is exactly the kind of finding keyword-research exists to catch."
+}
