@@ -72,6 +72,14 @@ node "$CLAUDE_PLUGIN_ROOT"/scripts/check-batch.mjs <dir|path ...>    # triage a 
 The gates resolve their schemas relative to themselves and look for your `projects/` in the current
 working directory, so they work the same whether run in this repo or installed as a plugin.
 
+If `${CLAUDE_PLUGIN_ROOT}` is not set in your shell, use the bundled fallback commands instead — they
+resolve the plugin path for you:
+
+```text
+/content-studio:cs-check                                  # full health check
+/content-studio:cs-gate check-prepublish.mjs <content.md> # any gate, by name, with args
+```
+
 ## Set up a content workspace
 
 1. Copy `plugins/content-studio/.env.example` to `.env` and `plugins/content-studio/config/publish.json.example`
