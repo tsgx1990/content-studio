@@ -22,6 +22,7 @@ import { dirname, resolve, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validate } from "./lib/json-schema-mini.mjs";
 import { scanForSecrets } from "./lib/secret-patterns.mjs";
+import { contentConfig } from "./lib/roots.mjs";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -48,7 +49,7 @@ const reasons = [];
 // --- load publish config (required field list) -----------------------------
 let requiredFields = ["title", "description", "tags"];
 try {
-  const cfg = JSON.parse(readFileSync(resolve(process.cwd(), "config/publish.json"), "utf8"));
+  const cfg = JSON.parse(readFileSync(contentConfig("publish.json"), "utf8"));
   const tgt = cfg.targets?.[cfg.defaultTarget];
   if (tgt?.frontMatter?.required) requiredFields = tgt.frontMatter.required;
   if (typeof tgt?.postsDir === "string" && tgt.postsDir.includes("EDIT_ME")) {

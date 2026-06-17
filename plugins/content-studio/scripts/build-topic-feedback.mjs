@@ -36,6 +36,7 @@
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { resolve, basename, relative } from "node:path";
+import { contentPath } from "./lib/roots.mjs";
 
 // ---- args -------------------------------------------------------------------
 const args = process.argv.slice(2);
@@ -57,9 +58,9 @@ const WINDOW = opt("--window", null);
 const MAX_OPPORTUNITIES = 10;
 
 // ---- locate the project -----------------------------------------------------
-const projectDir = existsSync(resolve(process.cwd(), projectArg))
-  ? resolve(process.cwd(), projectArg)
-  : resolve(process.cwd(), "projects", projectArg);
+const projectDir = existsSync(contentPath(projectArg))
+  ? contentPath(projectArg)
+  : contentPath("projects", projectArg);
 if (!existsSync(projectDir) || !statSync(projectDir).isDirectory()) {
   console.error(`project not found: ${projectDir}`);
   process.exit(2);

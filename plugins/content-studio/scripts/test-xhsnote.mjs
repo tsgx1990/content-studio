@@ -69,7 +69,7 @@ check("微信 导流 in body -> fail", exitCode([writeNote("vx.note.json", weixi
 const qrcode = clone(validNote); qrcode.body = han(200) + " 扫二维码进群";
 check("二维码 导流 in body -> fail", exitCode([writeNote("qr.note.json", qrcode)]) !== 0, "expected fail");
 
-const phone = clone(validNote); phone.body = han(200) + " 电话13812345678联系";
+const phone = clone(validNote); phone.body = han(200) + " 电话13812345678联系"; // pii-gate-allow: fake 手机号 fixture
 check("phone number 导流 in body -> fail", exitCode([writeNote("phone.note.json", phone)]) !== 0, "expected fail");
 
 const vxLatin = clone(validNote); vxLatin.body = han(200) + " 详情看主页vx哦";
@@ -79,7 +79,7 @@ check("latin 'vx' 导流 in body -> fail", exitCode([writeNote("vxlatin.note.jso
 const softOk = clone(validNote); softOk.body = han(200) + " 欢迎评论区交流，有问题私信我～";
 check("'私信/评论区' alone does not trip 导流 -> pass", exitCode([writeNote("soft.note.json", softOk)]) === 0, "expected pass");
 
-// override: a note legitimately about WeChat marketing can disable the scan explicitly
+// override: a note legitimately about WeChat marketing can disable the scan explicitly (pii-gate-allow: English "WeChat <word>" trips the contact regex; not a leak)
 const allow = clone(validNote); allow.diversion_terms = []; allow.body = han(200) + " 聊聊微信运营心得";
 check("diversion_terms=[] override -> pass", exitCode([writeNote("allow.note.json", allow)]) === 0, "expected pass");
 

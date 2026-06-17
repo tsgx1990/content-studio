@@ -24,11 +24,8 @@
  */
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname, basename } from "node:path";
-import { fileURLToPath } from "node:url";
 import { loadCurrentDataYear, extractAnchorPairs, compareToDataset } from "./lib/data-anchors.mjs";
-
-const SCRIPTS = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(SCRIPTS, "..");
+import { contentConfig } from "./lib/roots.mjs";
 
 function parseArgs(argv) {
   const out = { file: null, currentYear: null, json: false };
@@ -88,7 +85,7 @@ result.data_year = decl.data_year;
 
 // resolve current year (bad usage -> exit 2, distinct from a content block)
 let cur;
-try { cur = loadCurrentDataYear({ flag: currentYear, env: process.env.DATA_YEAR, configPath: resolve(ROOT, "config/data-freshness.json") }); }
+try { cur = loadCurrentDataYear({ flag: currentYear, env: process.env.DATA_YEAR, configPath: contentConfig("data-freshness.json") }); }
 catch (e) { console.error(e.message); process.exit(2); }
 result.current_year = cur;
 

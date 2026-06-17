@@ -24,15 +24,15 @@ import { resolve, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validate } from "./lib/json-schema-mini.mjs";
 import { SCHEMA_BY_SUFFIX, GATE_BY_SUFFIX } from "./lib/gates.mjs";
+import { CONTENT_ROOT } from "./lib/roots.mjs";
 
 const SCRIPTS = dirname(fileURLToPath(import.meta.url));
 // ROOT = where this toolkit's own files live (scripts/ + schemas/). Stays script-relative so it
 // resolves correctly whether run in-repo or installed as a plugin (schemas travel WITH the scripts).
 const ROOT = resolve(SCRIPTS, "..");
-// CONTENT_ROOT = where the user's projects/ live. Defaults to the current working directory so that,
-// installed as a plugin, `check.mjs` scans the user's content (their cwd) — NOT the plugin's own dir.
-// In-repo this is the repo root (cwd when run as `node scripts/check.mjs`), so behaviour is unchanged.
-const CONTENT_ROOT = process.env.CONTENT_STUDIO_ROOT || process.cwd();
+// CONTENT_ROOT (where the user's projects/ + config/ live) comes from lib/roots.mjs — the single
+// source so every gate agrees on it (and honours CONTENT_STUDIO_ROOT identically). In-repo it's the
+// cwd (the repo root when run as `node scripts/check.mjs`), so behaviour is unchanged.
 const rel = (p) => relative(CONTENT_ROOT, p);
 
 function walk(dir) {
@@ -183,12 +183,21 @@ for (const { suffix, script, section } of GATE_BY_SUFFIX) {
 
 // 3. fixture self-tests --------------------------------------------------------
 console.log("self-tests:");
-for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs"]) {
+for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs", "test-roots.mjs"]) {
   try {
     execFileSync("node", [resolve(SCRIPTS, t)], { stdio: "pipe" });
     ok(t);
   } catch {
     bad(`${t} — see: node scripts/${t}`);
+  }
+}
+
+// 3b. export tooling self-test — runs only in the source repo (the published plugin ships no tools/).
+{
+  const t = resolve(SCRIPTS, "../tools/test-export-safety.mjs");
+  if (existsSync(t)) {
+    try { execFileSync("node", [t], { stdio: "pipe" }); ok("test-export-safety.mjs"); }
+    catch { bad("test-export-safety.mjs — see: node tools/test-export-safety.mjs"); }
   }
 }
 

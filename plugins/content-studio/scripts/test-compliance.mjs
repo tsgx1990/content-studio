@@ -35,7 +35,7 @@ check("教育 industry off by default (no 保录取 catch)", !findComplianceIssu
 check("极限词 最好 caught by default", findComplianceIssues("这是最好的选择").some((f) => f.kind === "extreme"), "expected extreme");
 check("最近/最后 not caught", !findComplianceIssues("最近最后都没事").some((f) => f.kind === "extreme"), "false positive");
 check("微信 导流 caught", findComplianceIssues("加微信详聊").some((f) => f.kind === "diversion"), "expected diversion");
-check("手机号 caught", findComplianceIssues("电话13812345678").some((f) => f.kind === "phone"), "expected phone");
+check("手机号 caught", findComplianceIssues("电话13812345678").some((f) => f.kind === "phone"), "expected phone"); // pii-gate-allow: fake 手机号 fixture
 check("私信/评论区 not caught", findComplianceIssues("私信我，评论区见").length === 0, "false positive");
 check("INDUSTRY_TERMS has the 3 verticals", ["education", "medical", "finance"].every((k) => Array.isArray(INDUSTRY_TERMS[k])), "missing a vertical");
 // 升学/招生 承诺词补漏 (these promise words slipped a generic 极限词 list, caught only by manual grep)

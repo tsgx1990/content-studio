@@ -16,6 +16,7 @@ import { readFileSync, writeFileSync, appendFileSync, mkdirSync, existsSync } fr
 import { dirname, resolve, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
+import { CONTENT_ROOT, contentConfig } from "./lib/roots.mjs";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -40,7 +41,7 @@ try {
 }
 
 // --- config + review --------------------------------------------------------
-const cfg = JSON.parse(readFileSync(resolve(process.cwd(), "config/publish.json"), "utf8"));
+const cfg = JSON.parse(readFileSync(contentConfig("publish.json"), "utf8"));
 const tgt = cfg.targets[targetName || cfg.defaultTarget];
 const review = JSON.parse(readFileSync(contentPath.replace(/\.md$/i, ".review.json"), "utf8"));
 const m = review.metadata || {};
@@ -75,7 +76,7 @@ const langPrefix = lang !== "en" ? lang : "";
 // --- 3. strip meta block, write to target -----------------------------------
 const body = readFileSync(contentPath, "utf8").replace(/\n*<!--\s*meta[\s\S]*?-->\s*$/i, "\n");
 
-let outDir = tgt.postsDir.startsWith("/") ? tgt.postsDir : resolve(process.cwd(), tgt.postsDir);
+let outDir = tgt.postsDir.startsWith("/") ? tgt.postsDir : resolve(CONTENT_ROOT, tgt.postsDir);
 if (langPrefix) outDir = resolve(outDir, langPrefix);
 if (tgt.subdirByContentType) outDir = resolve(outDir, (review.content_type || "seo").replace("-article", ""));
 mkdirSync(outDir, { recursive: true });
@@ -86,7 +87,7 @@ writeFileSync(outPath, fm + body);
 
 // --- 4. publish log (find project root by walking up to project.yaml) -------
 let dir = dirname(contentPath);
-while (dir !== process.cwd() && dir !== "/" && !existsSync(resolve(dir, "project.yaml"))) dir = dirname(dir);
+while (dir !== CONTENT_ROOT && dir !== "/" && !existsSync(resolve(dir, "project.yaml"))) dir = dirname(dir);
 if (existsSync(resolve(dir, "project.yaml"))) {
   appendFileSync(
     resolve(dir, "publish-log.jsonl"),

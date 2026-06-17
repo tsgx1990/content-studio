@@ -88,7 +88,7 @@ gateCase("missing review sidecar -> fail", { review: undefined }, false);
 gateCase("publishable=false -> fail", { review: { ...clone(validReview), publishable: false } }, false);
 gateCase("copyright_risk=high -> fail", { review: { ...clone(validReview), copyright_risk: "high" } }, false);
 gateCase("missing required metadata -> fail", (() => { const r = clone(validReview); delete r.metadata.description; return { review: r }; })(), false);
-gateCase("secret in content -> fail", { content: "# Post\n\nsk-ant-api03ABCDEFGHIJKLMNOPQRSTUVWXYZ012345\n", review: validReview }, false);
+gateCase("secret in content -> fail", { content: "# Post\n\nsk-ant-api03ABCDEFGHIJKLMNOPQRSTUVWXYZ012345\n", review: validReview }, false); // pii-gate-allow: fake sk-ant fixture
 gateCase("affiliate without disclosure -> fail", { review: { ...clone(validReview), monetization: "affiliate" } }, false);
 gateCase("schema violation (bad enum) -> fail", { review: { ...clone(validReview), copyright_risk: "extreme" } }, false);
 // SEO content must be grounded in a `pursue` research sidecar (the "never publish on guesses" gate).
