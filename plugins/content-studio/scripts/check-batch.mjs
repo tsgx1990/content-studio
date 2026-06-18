@@ -19,11 +19,12 @@
  * dispatch the parallel content-review subagents only at the pieces that clear mechanics.
  */
 import { execFileSync } from "node:child_process";
-import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validate } from "./lib/json-schema-mini.mjs";
 import { schemaFor, gateFor } from "./lib/gates.mjs";
+import { walk } from "./lib/fs.mjs";
 
 const SCRIPTS = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(SCRIPTS, "..");
@@ -37,11 +38,6 @@ if (!inputs.length) {
   process.exit(2);
 }
 
-function walk(p) {
-  if (!existsSync(p)) return [];
-  if (statSync(p).isDirectory()) return readdirSync(p).flatMap((n) => walk(resolve(p, n)));
-  return [p];
-}
 const isContent = (f) => /\.md$/i.test(f) || schemaFor(f) !== null || gateFor(f) !== null;
 const files = [...new Set(inputs.flatMap((i) => walk(resolve(process.cwd(), i))))].filter(isContent).sort();
 

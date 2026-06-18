@@ -10,10 +10,11 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { readFileSync, readdirSync, statSync, existsSync, mkdtempSync, writeFileSync } from "node:fs";
+import { readFileSync, existsSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { resolve, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { walk } from "./lib/fs.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const RENDER = resolve(HERE, "render.mjs");
@@ -22,15 +23,6 @@ const check = (name, ok, detail) => ok
   ? (passed++, console.log(`  ✔ ${name}`))
   : (failed++, console.error(`  ✖ ${name} — ${detail || ""}`));
 
-function walk(dir) {
-  const out = [];
-  for (const n of (existsSync(dir) ? readdirSync(dir) : [])) {
-    const p = join(dir, n);
-    if (statSync(p).isDirectory()) out.push(...walk(p));
-    else out.push(p);
-  }
-  return out;
-}
 const render = (src) => execFileSync("node", [RENDER, src], { encoding: "utf8" });
 
 // 1. golden: render === committed .md ----------------------------------------

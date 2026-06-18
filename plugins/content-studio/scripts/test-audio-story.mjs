@@ -25,6 +25,8 @@ function check(name, ok, detail) {
 }
 function write(name, obj) { const p = join(tmp, name); writeFileSync(p, JSON.stringify(obj, null, 2)); return p; }
 const words = (n) => Array.from({ length: n }, () => "word").join(" ");
+// n CJK characters (cycles a handful of 国风 chars) — used to prove CJK-aware runtime estimation.
+const cjk = (n) => { const pool = "夏夜南天苍龙横亘心宿三星大火黄昏正南暑退秋生先民举火祭祀以应天时岁岁年年深红低悬温润叮咛寒暑更替四时有信"; return Array.from({ length: n }, (_, i) => pool[i % pool.length]).join(""); };
 const clone = (o) => JSON.parse(JSON.stringify(o));
 
 // target 60s @ 155 wpm => ~155 words. narration 50 + dialogue 50 + narration 50 = 150 words + 2s sfx ≈ 60s.
@@ -108,6 +110,36 @@ const exactCover = clone(valid);
 exactCover.cues[3].text = words(49) + " NW";
 exactCover.cues[3].say_as = [{ text: "NW", as: "characters" }];
 check("exact say_as covers hostile token -> pass", exitCode([write("exact.audio.json", exactCover)]) === 0, "expected pass");
+
+// --- CJK-aware runtime (TC-016) ---------------------------------------------
+// A Chinese narrator speaks ~240 字/分, not 155 "words"/分. The OLD gate timed every CJK char at
+// 155 wpm, so a 240-字 念白 (~60s of real speech) was estimated at ~93s and wrongly judged.
+// 240 chars @ 240 cpm = 60s -> inside 51–69s; @ 155 "wpm" = 93s -> would have FAILED. This case
+// is the regression lock: it only passes BECAUSE the estimate is CJK-aware.
+const cjkOnTarget = {
+  audio_id: "zh-demo", title: "心宿", language: "zh", target_seconds: 60,
+  voices: [{ id: "narrator", name: "旁白", kind: "narrator" }],
+  sounds: [],
+  cues: [{ type: "narration", voice: "narrator", text: cjk(240) }],
+};
+check("CJK narration sized for target (240字@240cpm≈60s) -> pass", exitCode([write("zh-ok.audio.json", cjkOnTarget)]) === 0, "expected pass (CJK-aware ~60s, not ~93s)");
+
+// Same 240 chars but a 30s target — too long even at 240 cpm (60s > 34.5s) -> fail (sanity: the gate
+// still catches a genuinely over-length CJK piece; it isn't just always passing CJK).
+const cjkTooLong = clone(cjkOnTarget); cjkTooLong.target_seconds = 30;
+check("CJK narration far over its target -> fail", exitCode([write("zh-long.audio.json", cjkTooLong)]) !== 0, "expected fail (60s > 30s±15%)");
+
+// A short CJK 念白 (120字@240cpm≈30s) with a generous 60s target was, under the old gate, estimated at
+// ~46s and could slip inside tolerance — the user's "short audio wrongly judged adequate" failure.
+// CJK-aware it is ~30s, correctly OUTSIDE the 51–69s band -> fail.
+const cjkTooShort = clone(cjkOnTarget); cjkTooShort.cues[0].text = cjk(120);
+check("short CJK 念白 vs long target (≈30s) -> fail", exitCode([write("zh-short.audio.json", cjkTooShort)]) !== 0, "expected fail (CJK-aware ~30s, not ~46s)");
+
+// TTS-safety still applies to CJK cues: a bare 4-digit year in 中文 text needs a say_as override.
+const cjkDigits = clone(cjkOnTarget); cjkDigits.cues[0].text = cjk(236) + " 2025年";
+check("CJK cue with uncovered digit-run -> fail", exitCode([write("zh-digit.audio.json", cjkDigits)]) !== 0, "expected fail");
+const cjkDigitsCovered = clone(cjkDigits); cjkDigitsCovered.cues[0].say_as = [{ text: "2025", as: "digits" }];
+check("CJK cue digit-run covered by say_as -> pass", exitCode([write("zh-digitok.audio.json", cjkDigitsCovered)]) === 0, "expected pass");
 
 rmSync(tmp, { recursive: true, force: true });
 console.log(`\n${passed} passed, ${failed} failed`);

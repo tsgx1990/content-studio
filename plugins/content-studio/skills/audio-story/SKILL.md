@@ -25,7 +25,10 @@ often voiced by TTS, so its reproducible failures are different and belong to a 
   left dangling;
 - **an orienting opening** — the first cue may not be cold `dialogue` (open on narration or a sound:
   ear-only, no one knows who is speaking yet);
-- **runtime** within tolerance of `target_seconds` (spoken words / wpm + sfx/music seconds);
+- **runtime** within tolerance of `target_seconds` — CJK-aware: Latin words at `words_per_minute`
+  (default 155), CJK characters at `chars_per_minute` (default 240, since a Chinese narrator speaks
+  ~240 字/分, not 155 "words"/分) + sfx/music seconds. A pure-English piece is unchanged; a 中文 念白 is
+  no longer mis-estimated (~250 字 ≈ 60s, not ~98s). Override either rate per file when needed;
 - **TTS-safety** — every TTS-hostile token in spoken text (digit runs, currency, `% & # @ ^ ~ _ = + * /`,
   URLs, emails, ALL-CAPS acronyms) must be covered by a `say_as` override declaring how to voice it.
 

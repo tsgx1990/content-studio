@@ -19,12 +19,13 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validate } from "./lib/json-schema-mini.mjs";
 import { SCHEMA_BY_SUFFIX, GATE_BY_SUFFIX } from "./lib/gates.mjs";
 import { CONTENT_ROOT } from "./lib/roots.mjs";
+import { walk } from "./lib/fs.mjs";
 
 const SCRIPTS = dirname(fileURLToPath(import.meta.url));
 // ROOT = where this toolkit's own files live (scripts/ + schemas/). Stays script-relative so it
@@ -34,16 +35,6 @@ const ROOT = resolve(SCRIPTS, "..");
 // source so every gate agrees on it (and honours CONTENT_STUDIO_ROOT identically). In-repo it's the
 // cwd (the repo root when run as `node scripts/check.mjs`), so behaviour is unchanged.
 const rel = (p) => relative(CONTENT_ROOT, p);
-
-function walk(dir) {
-  const out = [];
-  for (const name of (existsSync(dir) ? readdirSync(dir) : [])) {
-    const p = resolve(dir, name);
-    if (statSync(p).isDirectory()) out.push(...walk(p));
-    else out.push(p);
-  }
-  return out;
-}
 
 let failures = 0;
 const ok = (m) => console.log(`  ✔ ${m}`);
@@ -183,7 +174,7 @@ for (const { suffix, script, section } of GATE_BY_SUFFIX) {
 
 // 3. fixture self-tests --------------------------------------------------------
 console.log("self-tests:");
-for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs", "test-roots.mjs"]) {
+for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs", "test-roots.mjs", "test-fs.mjs"]) {
   try {
     execFileSync("node", [resolve(SCRIPTS, t)], { stdio: "pipe" });
     ok(t);

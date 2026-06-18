@@ -12,12 +12,15 @@
  *   3. speaker resolution: every narration/dialogue cue names a DECLARED voice and has non-empty text
  *   4. asset resolution: every sfx/music cue names a DECLARED sound; no voice/sound is left unused
  *   5. ear-only opening: the FIRST cue is not 'dialogue' (orient the listener — narration or a sound)
- *   6. runtime within tolerance of target_seconds (spoken words / wpm + sfx/music seconds)
+ *   6. runtime within tolerance of target_seconds (spoken time + sfx/music seconds). Runtime is
+ *      CJK-aware: Latin words are timed at `wpm`, CJK characters at `chars_per_minute` — a Chinese
+ *      narrator speaks ~240 字/分, not 155 "words"/分, so a 250-字 国风念白 is ~60s, not ~98s.
  *   7. TTS-SAFETY: every TTS-hostile token in spoken text (digit runs, currency, % & # @ ^ ~ _ = + * /,
  *      URLs, emails, ALL-CAPS acronyms) must be covered by a say_as override on that cue
  *
- * Defaults (overridable per file): wpm 155, tolerance 0.15. "Is the prose/voice-acting good?" is
- * content-review's job; THIS gate enforces the mechanical, ear-only correctness facts.
+ * Defaults (overridable per file): wpm 155, chars_per_minute 240, tolerance 0.15. For a pure-English
+ * piece (no CJK chars) the estimate is identical to the old words/wpm one. "Is the prose/voice-acting
+ * good?" is content-review's job; THIS gate enforces the mechanical, ear-only correctness facts.
  *
  * Exit 0 = OK. Exit 1 = blocked (reasons on stderr). Exit 2 = bad usage.
  */
@@ -26,9 +29,10 @@ import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { validate } from "./lib/json-schema-mini.mjs";
+import { DEFAULT_CPM, countWords, secondsForText as secondsFor } from "./lib/cjk-pacing.mjs";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const DEFAULT_WPM = 155;
+const DEFAULT_WPM = 155; // audio narration baseline (slightly faster than the script gate's 150)
 const DEFAULT_TOLERANCE = 0.15;
 
 const arg = process.argv[2];
@@ -59,15 +63,15 @@ try {
   reasons.push(`could not load audio-story schema: ${e.message}`);
 }
 
-const countWords = (str) =>
-  (String(str).match(/[A-Za-z0-9][A-Za-z0-9'’‑-]*/g) || []).length +
-  (String(str).match(/[一-鿿㐀-䶿]/g) || []).length;
-
 const voices = Array.isArray(audio.voices) ? audio.voices : [];
 const sounds = Array.isArray(audio.sounds) ? audio.sounds : [];
 const cues = Array.isArray(audio.cues) ? audio.cues : [];
 const wpm = typeof audio.words_per_minute === "number" && audio.words_per_minute > 0 ? audio.words_per_minute : DEFAULT_WPM;
+const cpm = typeof audio.chars_per_minute === "number" && audio.chars_per_minute > 0 ? audio.chars_per_minute : DEFAULT_CPM;
 const tolerance = typeof audio.tolerance === "number" && audio.tolerance >= 0 ? audio.tolerance : DEFAULT_TOLERANCE;
+// Time Latin words at wpm and CJK characters at cpm — for a pure-English piece this is identical to
+// the old words/wpm estimate (no CJK chars), but a Chinese narration is no longer mis-estimated.
+const secondsForText = (str) => secondsFor(str, wpm, cpm);
 const isSpoken = (c) => c && (c.type === "narration" || c.type === "dialogue");
 const isSound = (c) => c && (c.type === "sfx" || c.type === "music");
 
@@ -114,13 +118,14 @@ if (cues.length && cues[0] && cues[0].type === "dialogue") {
 // 6. runtime within tolerance ------------------------------------------------
 const spokenWords = cues.filter(isSpoken).reduce((n, c) => n + countWords(c.text || ""), 0);
 const soundSeconds = cues.filter(isSound).reduce((n, c) => n + (typeof c.seconds === "number" && c.seconds > 0 ? c.seconds : 0), 0);
-const estSeconds = (spokenWords / wpm) * 60 + soundSeconds;
+const spokenSeconds = cues.filter(isSpoken).reduce((n, c) => n + secondsForText(c.text || ""), 0);
+const estSeconds = spokenSeconds + soundSeconds;
 if (typeof audio.target_seconds === "number" && audio.target_seconds > 0) {
   const lo = audio.target_seconds * (1 - tolerance);
   const hi = audio.target_seconds * (1 + tolerance);
   if (estSeconds < lo || estSeconds > hi) {
     reasons.push(
-      `estimated runtime ${estSeconds.toFixed(0)}s (${spokenWords} spoken words @ ${wpm} wpm` +
+      `estimated runtime ${estSeconds.toFixed(0)}s (${spokenWords} spoken words @ ${wpm} wpm / ${cpm} cpm` +
       `${soundSeconds ? ` + ${soundSeconds}s sound` : ""}) is outside ${lo.toFixed(0)}–${hi.toFixed(0)}s ` +
       `(target ${audio.target_seconds}s ±${Math.round(tolerance * 100)}%)`
     );
@@ -175,6 +180,6 @@ const soundCues = cues.filter(isSound).length;
 console.log(
   `✔ audio-story gate passed: ${basename(audioPath)} ` +
   `(${cues.length} cues — ${spokenCues} spoken / ${soundCues} sound, ${voiceIds.size} voice(s), ${soundIds.size} sound(s), ` +
-  `${spokenWords} words ~${estSeconds.toFixed(0)}s @ ${wpm} wpm; speakers + sounds resolve, TTS-safe)`
+  `${spokenWords} words ~${estSeconds.toFixed(0)}s @ ${wpm} wpm / ${cpm} cpm; speakers + sounds resolve, TTS-safe)`
 );
 process.exit(0);

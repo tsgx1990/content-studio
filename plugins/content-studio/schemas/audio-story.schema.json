@@ -11,8 +11,9 @@
     "title": { "type": "string", "minLength": 1, "description": "Working title of the piece." },
     "language": { "type": "string", "minLength": 2 },
     "keyword": { "type": "string", "description": "Optional target keyword/topic (ideally backed by a *.research.json with decision: pursue)." },
-    "target_seconds": { "type": "integer", "description": "Intended runtime in seconds. The gate checks estimated runtime (spoken words / wpm + sfx/music seconds) is within tolerance." },
-    "words_per_minute": { "type": "number", "description": "Narration rate for the runtime estimate. Default 155 (gate). Use ~130 for slow/educational delivery." },
+    "target_seconds": { "type": "integer", "description": "Intended runtime in seconds. The gate checks estimated runtime (CJK-aware spoken time + sfx/music seconds) is within tolerance. Spoken time = Latin words / words_per_minute + CJK chars / chars_per_minute." },
+    "words_per_minute": { "type": "number", "description": "Latin-word narration rate for the runtime estimate. Default 155 (gate). Use ~130 for slow/educational delivery." },
+    "chars_per_minute": { "type": "number", "description": "CJK (中文等) narration rate for the runtime estimate — a Chinese narrator speaks ~240 字/分, not 155 \"words\"/分. Default 240 (gate); use ~200 for slow/educational delivery. Ignored for pure-Latin text." },
     "tolerance": { "type": "number", "description": "Allowed fraction over/under target_seconds. Default 0.15 (gate)." },
     "voices": {
       "type": "array",
