@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://content-create/schemas/prose.schema.json",
+  "title": "Prose card (micro-story / short narrative)",
+  "description": "Machine-read source of truth for a short prose piece — a micro-story or narrative 'card' meant to be embedded in an app, posted, or printed on a story card, at projects/{slug}/prose/{lang}/{slug}.prose.json. This is the lightweight vertical for plain narrative text that does NOT need the audio-story scaffolding (no voices/sounds/cues, no TTS-safety gate, no runtime gate). The reader-facing copy is rendered from this into a sibling .md. The deterministic gate (scripts/check-prose.mjs) enforces only the mechanical facts: a sane title, a CJK-aware length band, and — when a compliance block is present — a ZH 极限词/承诺词 scan. Whether the story is GOOD (voice, arc, payoff) stays with content-review.",
+  "type": "object",
+  "required": ["prose_id", "title", "body"],
+  "additionalProperties": true,
+  "properties": {
+    "prose_id": { "type": "string", "minLength": 1, "description": "Stable slug; matches the filename basename." },
+    "language": { "type": "string", "minLength": 2, "description": "BCP-ish code, e.g. 'en' or 'zh'. Drives CJK-aware length counting and the compliance scan." },
+    "keyword": { "type": "string", "description": "Optional topic the piece serves (ideally backed by a *.research.json with decision: pursue)." },
+    "title": { "type": "string", "minLength": 1, "description": "Card title. The gate caps it (default 40 units) so it stays a title, not a paragraph." },
+    "summary": { "type": "string", "description": "Optional one-line hook/teaser rendered as a blockquote above the body (not length-gated)." },
+    "body": { "type": "string", "minLength": 1, "description": "The prose itself (paragraphs separated by blank lines). Gate enforces a CJK-aware length band (default 60..800 units; a 汉字 or a Latin word each count 1)." },
+    "tags": {
+      "type": "array",
+      "description": "Optional topic tags WITHOUT the leading # (the renderer adds it).",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "length": {
+      "type": "object",
+      "description": "OPTIONAL per-piece override of the gate's length band (in CJK-aware units).",
+      "properties": {
+        "min": { "type": "integer" },
+        "max": { "type": "integer" },
+        "title_max": { "type": "integer" }
+      }
+    },
+    "compliance": {
+      "type": "object",
+      "description": "OPTIONAL — present this block to OPT IN to the ZH 极限词/承诺词 scan (off by default, so fiction that legitimately uses 最/第一 in dialogue isn't false-tripped). Use it for marketing/branded prose cards.",
+      "properties": {
+        "industries": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "High-risk-industry promise-word sets to add (e.g. education/medical/finance), same vocabulary as the other ZH gates."
+        }
+      }
+    }
+  }
+}

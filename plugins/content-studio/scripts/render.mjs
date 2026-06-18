@@ -13,6 +13,7 @@
  *   .script.json  → youtube teleprompter  (language-aware; runtime estimate via lib/cjk-pacing)
  *   .lesson.json  → graded-reader page    (objective / story paragraphs / glossary table)
  *   .drama.json   → 微短剧 script preview  (synopsis / episodes / role-tagged beats / cliffhangers)
+ *   .prose.json   → prose card            (title / optional summary / body / tags)
  *
  * NOT rendered (their committed .md carries prose that is NOT in the JSON — author by hand):
  *   .if.json / .game.json  — node/scene *titles* are not in the JSON
@@ -53,6 +54,15 @@ try {
 function renderNote(n) {
   const tags = Array.isArray(n.tags) ? n.tags.map((t) => "#" + t).join(" ") : "";
   return `# ${n.title}\n\n${n.body}\n\n${tags}\n`;
+}
+
+function renderProse(p) {
+  let out = `# ${p.title}\n\n`;
+  if (p.summary) out += `> ${p.summary}\n\n`;
+  out += `${p.body}\n`;
+  const tags = Array.isArray(p.tags) && p.tags.length ? p.tags.map((t) => "#" + t).join(" ") : "";
+  if (tags) out += `\n${tags}\n`;
+  return out;
 }
 
 function renderScript(s) {
@@ -122,6 +132,7 @@ function renderDrama(d, srcPath) {
 
 const RENDERERS = [
   [/\.note\.json$/i, renderNote],
+  [/\.prose\.json$/i, renderProse],
   [/\.script\.json$/i, renderScript],
   [/\.lesson\.json$/i, renderLesson],
   [/\.drama\.json$/i, renderDrama],
@@ -129,7 +140,7 @@ const RENDERERS = [
 
 const match = RENDERERS.find(([re]) => re.test(srcPath));
 if (!match) {
-  console.error(`✖ no renderer for ${basename(srcPath)} — supported: .note/.script/.lesson/.drama.json (see header for why other types are author-by-hand)`);
+  console.error(`✖ no renderer for ${basename(srcPath)} — supported: .note/.prose/.script/.lesson/.drama.json (see header for why other types are author-by-hand)`);
   process.exit(2);
 }
 

@@ -44,7 +44,7 @@ const files = walk(resolve(CONTENT_ROOT, "projects"));
 
 // 1. sidecars conform to their schema -----------------------------------------
 console.log("sidecars:");
-const sidecars = files.filter((f) => /\.(review|research|spec|if|script|note|drama|lesson|game|audio|feedback|data)\.json$/i.test(f));
+const sidecars = files.filter((f) => /\.(review|research|spec|if|script|note|prose|drama|lesson|game|audio|feedback|data)\.json$/i.test(f));
 if (!sidecars.length) console.log("  (none)");
 for (const f of sidecars) {
   const schemaPath = SCHEMA_BY_SUFFIX.find(([re]) => re.test(f))[1];
@@ -140,7 +140,7 @@ if (stories.length) {
 }
 
 // 2d–2j. per-type source gates — one loop over the shared GATE_BY_SUFFIX registry (if/script/
-//        note/drama/lesson/game/audio). The gate takes the .json source and exits non-zero on
+//        note/prose/drama/lesson/game/audio). The gate takes the .json source and exits non-zero on
 //        failure. (children-story readability + long-form continuity above are special-shaped.)
 for (const { suffix, script, section } of GATE_BY_SUFFIX) {
   const matched = files.filter((f) => suffix.test(f));
@@ -174,7 +174,7 @@ for (const { suffix, script, section } of GATE_BY_SUFFIX) {
 
 // 3. fixture self-tests --------------------------------------------------------
 console.log("self-tests:");
-for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs", "test-roots.mjs", "test-fs.mjs"]) {
+for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs", "test-roots.mjs", "test-fs.mjs", "test-prose.mjs"]) {
   try {
     execFileSync("node", [resolve(SCRIPTS, t)], { stdio: "pipe" });
     ok(t);

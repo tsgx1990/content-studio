@@ -29,8 +29,8 @@ const render = (src) => execFileSync("node", [RENDER, src], { encoding: "utf8" }
 console.log("golden (render === committed .md):");
 // Scan the content workspace (cwd), not the script dir — so this self-test validates real content
 // whether run in-repo or as an installed plugin. With no content present there is nothing to verify.
-const sources = walk(resolve(process.cwd(), "projects")).filter((f) => /\.(note|script|lesson|drama)\.json$/i.test(f));
-if (!sources.length) console.log("  (no .note/.script.json under projects/ — nothing to render-test)");
+const sources = walk(resolve(process.cwd(), "projects")).filter((f) => /\.(note|prose|script|lesson|drama)\.json$/i.test(f));
+if (!sources.length) console.log("  (no .note/.prose/.script.json under projects/ — nothing to render-test)");
 for (const src of sources) {
   const md = src.replace(/\.[a-z]+\.json$/i, ".md");
   if (!existsSync(md)) { check(`${src} has a sibling .md`, false, "missing .md"); continue; }

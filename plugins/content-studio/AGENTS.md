@@ -89,7 +89,11 @@ same model. `seo-article` is the live loop; `novel` is validated at 24-ch/3-arc 
 | english-learning-story | `learn/{l}/{s}.lesson.json` | check-graded-reader |
 | game-story | `game/{l}/{s}.game.json` | check-game-story |
 | audio-story | `audio/{l}/{s}.audio.json` | check-audio-story |
+| prose-card (微故事) | `prose/{l}/{s}.prose.json` | check-prose |
 
+- **prose-card** is the *lightweight* text vertical (micro-story / story card): plain narrative with no
+  audio scaffolding. Use it (not audio-story) whenever the deliverable is just text; the gate enforces
+  a CJK-aware length band + an opt-in (via a `compliance` block) 极限词/承诺词 scan.
 - **ZH marketing types** (xhs-post, short-drama, youtube-script) share `scripts/lib/compliance-cn.mjs`
   (极限词 + 导流 scan; opt-in 教育/医疗/金融 promise-words via a `compliance.industries` JSON block).
 - **Social/video topics reuse `keyword-research`** (SearXNG, `language: zh`) — never invent demand.
@@ -101,7 +105,7 @@ node "${CLAUDE_PLUGIN_ROOT}"/scripts/check.mjs                              # re
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-prepublish.mjs <content.md>      # publish gate
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-<type>.mjs <source.json>         # the per-type gate
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-ai-tells.mjs <content.md> [--strict] [--compliance[=industries]]  # AI-tell scanner (EN+ZH); warns on 中/英引号混用 (ZH→“ ”, EN→"); --compliance adds 极限词/承诺词 scan to ZH prose
-node "${CLAUDE_PLUGIN_ROOT}"/scripts/render.mjs <source.json> [--write]     # render note/script/lesson/drama -> .md (don't hand-assemble)
+node "${CLAUDE_PLUGIN_ROOT}"/scripts/render.mjs <source.json> [--write]     # render note/prose/script/lesson/drama -> .md (don't hand-assemble)
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-freshness.mjs <file> [--current-year=N]  # year-stamped data gate: warn if stale; block if a cited 分数≈位次万 drifts off its *.data.json source
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-batch.mjs <path|dir ...> [--json]  # scoped readiness triage for N pieces: per-file publish/schema/per-type-gate/ai-tells/freshness rollup (reviewing a batch)
 node "${CLAUDE_PLUGIN_ROOT}"/scripts/validate-sidecar.mjs <sidecar.json>    # validate a sidecar against its schema
