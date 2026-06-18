@@ -20,6 +20,7 @@
         "required": ["id", "text"],
         "properties": {
           "id": { "type": "string", "minLength": 1, "description": "Stable slug id; referenced by start + choice.target." },
+          "title": { "type": "string", "minLength": 1, "description": "Human-readable scene heading for the rendered .md (e.g. 'The empty station'). Optional; the renderer falls back to the id." },
           "text": { "type": "string", "minLength": 1, "description": "The scene prose the reader sees at this node." },
           "ending": { "type": "boolean", "description": "True => a terminal node. A node with no choices is treated as an ending too." },
           "choices": {

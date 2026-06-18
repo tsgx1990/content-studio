@@ -6,7 +6,7 @@
  * Asserts the renderer is a faithful, reproducible projection of the JSON source:
  *   - every committed *.note.json / *.script.json under projects/ renders byte-identical to its
  *     sibling .md (golden — proves the .md never drifts from the JSON source of truth);
- *   - an unsupported type (.if.json) is rejected with exit 2 (renderer stays narrow & honest).
+ *   - an unsupported type (.game.json) is rejected with exit 2 (renderer stays narrow & honest).
  */
 
 import { execFileSync } from "node:child_process";
@@ -29,8 +29,8 @@ const render = (src) => execFileSync("node", [RENDER, src], { encoding: "utf8" }
 console.log("golden (render === committed .md):");
 // Scan the content workspace (cwd), not the script dir — so this self-test validates real content
 // whether run in-repo or as an installed plugin. With no content present there is nothing to verify.
-const sources = walk(resolve(process.cwd(), "projects")).filter((f) => /\.(note|prose|script|lesson|drama)\.json$/i.test(f));
-if (!sources.length) console.log("  (no .note/.prose/.script.json under projects/ — nothing to render-test)");
+const sources = walk(resolve(process.cwd(), "projects")).filter((f) => /\.(note|prose|if|script|lesson|drama)\.json$/i.test(f));
+if (!sources.length) console.log("  (no .note/.prose/.if/.script.json under projects/ — nothing to render-test)");
 for (const src of sources) {
   const md = src.replace(/\.[a-z]+\.json$/i, ".md");
   if (!existsSync(md)) { check(`${src} has a sibling .md`, false, "missing .md"); continue; }
@@ -39,13 +39,14 @@ for (const src of sources) {
 }
 
 // 2. unsupported type rejected with exit 2 -----------------------------------
+// .game.json stays author-by-hand (scene titles aren't in the JSON) — the renderer must refuse it.
 console.log("guards:");
 const tmp = mkdtempSync(join(tmpdir(), "render-test-"));
-const bogus = join(tmp, "x.if.json");
-writeFileSync(bogus, JSON.stringify({ story_id: "x", nodes: [] }));
+const bogus = join(tmp, "x.game.json");
+writeFileSync(bogus, JSON.stringify({ game_id: "x", scenes: [] }));
 let code = 0;
 try { execFileSync("node", [RENDER, bogus], { stdio: "pipe" }); } catch (e) { code = e.status; }
-check("unsupported .if.json → exit 2", code === 2, `got exit ${code}`);
+check("unsupported .game.json → exit 2", code === 2, `got exit ${code}`);
 
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed ? 1 : 0);

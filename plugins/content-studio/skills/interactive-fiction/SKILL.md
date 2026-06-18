@@ -33,24 +33,28 @@ target_endings: number   # optional — how many distinct endings to aim for
 ## Outputs (under projects/{slug}/if/{lang}/)
 
 - `{slug}.if.json` — the **graph** (source of truth): `story_id`, `start`, `nodes[]` where each node
-  has `id`, `text` (scene prose), optional `ending: true`, and `choices[]` of `{ label, target }`.
-- `{slug}.md` — the **rendered** readable page: each node as an anchored section
-  (`## Scene Title {#node-id}`) and each choice as an in-page link (`- [label](#target)`). Endings
-  are marked. This is what gets reviewed + published (anchored links work on a static Hexo page).
+  has `id`, optional `title` (the human-readable scene heading), `text` (scene prose), optional
+  `ending: true`, and `choices[]` of `{ label, target }`.
+- `{slug}.md` — the **rendered** readable page (a deterministic projection via `render.mjs`, NOT
+  hand-written): each node as an anchored section (`## title {#node-id}`), each choice an in-page link
+  (`- [label](#target)`), endings marked `**An ending.**` with a restart link, and a derived
+  ending-count line. This is what gets reviewed + published (anchored links work on a static Hexo page).
 - `{slug}.review.json` — `content-review` sidecar (`content_type: interactive-fiction`).
 
 ## Workflow
 
 1. Confirm/create `projects/{slug}/project.yaml` with `type: interactive-fiction`.
 2. **Design the graph first** (`{slug}.if.json`): a `start` node, branching choices, and ≥1
-   `ending`. Keep ids stable slugs. Aim for meaningful choices (each changes the path), not fake
-   ones that re-merge immediately. Original characters/world only.
+   `ending`. Keep ids stable slugs and give each node a `title` (its scene heading). Aim for
+   meaningful choices (each changes the path), not fake ones that re-merge immediately. Original
+   characters/world only.
 3. **Gate the graph:** `node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-storygraph.mjs projects/{slug}/if/{lang}/{slug}.if.json`.
    Fix until it exits 0 — it reports node + ending counts and pinpoints any broken branch / orphan /
    dead-end. Also `node "${CLAUDE_PLUGIN_ROOT}"/scripts/validate-sidecar.mjs {slug}.if.json` for the schema alone.
-4. **Render to `{slug}.md`** from the graph: title heading, then one anchored section per node in a
-   sensible reading order (start first), choices as `- [label](#target)` links, endings labelled
-   "**An ending.**". Keep the rendered prose faithful to the graph `text`.
+4. **Render to `{slug}.md`:** `node "${CLAUDE_PLUGIN_ROOT}"/scripts/render.mjs projects/{slug}/if/{lang}/{slug}.if.json --write`
+   — never hand-assemble the page (it would drift from the graph the gate trusts). The renderer
+   projects the headings, anchored sections, choice links, ending markers and ending-count line from
+   the JSON; node `title` becomes the heading (falls back to the id if omitted).
 5. **Review:** run `content-review` → `{slug}.review.json` (`content_type: interactive-fiction`,
    metadata title/description/tags, `monetization` as appropriate).
 6. **Publish (optional):** via `publish-content` (`check-prepublish.mjs`). In-page anchor links

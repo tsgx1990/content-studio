@@ -14,9 +14,10 @@
  *   .lesson.json  → graded-reader page    (objective / story paragraphs / glossary table)
  *   .drama.json   → 微短剧 script preview  (synopsis / episodes / role-tagged beats / cliffhangers)
  *   .prose.json   → prose card            (title / optional summary / body / tags)
+ *   .if.json      → interactive fiction   (anchored scene sections + in-page choice links; node.title)
  *
  * NOT rendered (their committed .md carries prose that is NOT in the JSON — author by hand):
- *   .if.json / .game.json  — node/scene *titles* are not in the JSON
+ *   .game.json             — scene *titles* are not in the JSON
  *   .spec.json             — the children's-story prose is not in the JSON (spec = constraints only)
  *   .audio.json            — the Cast bios differ from the per-voice tts_voice field
  *
@@ -130,9 +131,40 @@ function renderDrama(d, srcPath) {
   return blocks.join("\n\n") + "\n";
 }
 
+// A node is terminal if flagged, or (per the schema) if it offers no choices.
+const ifIsEnding = (n) => n.ending === true || !(Array.isArray(n.choices) && n.choices.length);
+
+function renderIF(s) {
+  const nodes = Array.isArray(s.nodes) ? s.nodes : [];
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  const titleOf = (n) => n.title || n.id;
+  const endings = nodes.filter(ifIsEnding).length;
+  const startNode = byId.get(s.start);
+  const startTitle = startNode ? titleOf(startNode) : s.start;
+
+  const blocks = [
+    `# ${s.title}`,
+    `*A choose-your-path story. Follow the links; some paths end sooner than others. There are ${endings} endings.*`,
+    `Begin at [${startTitle}](#${s.start}).`,
+  ];
+  for (const n of nodes) {
+    const head = `## ${titleOf(n)} {#${n.id}}`;
+    if (ifIsEnding(n)) {
+      // strip a trailing "An ending." the author may have baked into the prose — we render the marker.
+      const text = String(n.text).replace(/\s*An ending\.?\s*$/i, "");
+      blocks.push(`${head}\n\n${text}\n\n**An ending.** · [↻ Start again](#${s.start})`);
+    } else {
+      const choices = n.choices.map((c) => `- [${c.label}](#${c.target})`).join("\n");
+      blocks.push(`${head}\n\n${n.text}\n\n${choices}`);
+    }
+  }
+  return blocks.join("\n\n") + "\n";
+}
+
 const RENDERERS = [
   [/\.note\.json$/i, renderNote],
   [/\.prose\.json$/i, renderProse],
+  [/\.if\.json$/i, renderIF],
   [/\.script\.json$/i, renderScript],
   [/\.lesson\.json$/i, renderLesson],
   [/\.drama\.json$/i, renderDrama],
@@ -140,7 +172,7 @@ const RENDERERS = [
 
 const match = RENDERERS.find(([re]) => re.test(srcPath));
 if (!match) {
-  console.error(`✖ no renderer for ${basename(srcPath)} — supported: .note/.prose/.script/.lesson/.drama.json (see header for why other types are author-by-hand)`);
+  console.error(`✖ no renderer for ${basename(srcPath)} — supported: .note/.prose/.if/.script/.lesson/.drama.json (see header for why other types are author-by-hand)`);
   process.exit(2);
 }
 
