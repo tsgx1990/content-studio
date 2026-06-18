@@ -25,6 +25,7 @@
         "properties": {
           "id": { "type": "string", "minLength": 1, "description": "Stable voice id referenced by cues (e.g. 'narrator', 'mara')." },
           "name": { "type": "string", "description": "Display name shown in the rendered cast list / speaker labels." },
+          "bio": { "type": "string", "description": "Optional one-line cast description for the rendered .md's Cast list (e.g. 'the old keeper; weathered, gentle'). This is a character/role note for the reader — distinct from tts_voice, which is the concrete engine voice." },
           "kind": { "type": "string", "enum": ["narrator", "character"], "description": "narrator = tells the story; character = speaks dialogue. Default character." },
           "tts_voice": { "type": "string", "description": "Optional concrete TTS voice id/name to render with (e.g. an ElevenLabs/Polly voice)." }
         }

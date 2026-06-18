@@ -48,12 +48,15 @@ language: string         # default "en"
 ## Outputs (under projects/{slug}/audio/{lang}/)
 
 - `{slug}.audio.json` — the **cue list** (source of truth): `audio_id`, `target_seconds`,
-  `voices[]` (`{id, name?, kind?}`), optional `sounds[]` (`{id, description?}`), and `cues[]` where
-  each cue is `narration`/`dialogue` (`voice` + `text`, optional `say_as[]`/`direction`) or
-  `sfx`/`music` (`sound`, optional `seconds`).
-- `{slug}.md` — the **rendered** producer script: a Cast list, then cues in order — narration as
-  prose, dialogue as **Name:** lines, sfx/music as `> [SFX: …]` / `> [MUSIC: …]`, with any `say_as`
-  pronunciations noted. This is what gets reviewed + published.
+  `voices[]` (`{id, name?, bio?, kind?, tts_voice?}`), optional `sounds[]` (`{id, description?}`), and
+  `cues[]` where each cue is `narration`/`dialogue` (`voice` + `text`, optional `say_as[]`/`direction`)
+  or `sfx`/`music` (`sound`, optional `seconds`). A voice's `bio` is the Cast-list description (a
+  reader-facing role note, distinct from `tts_voice`); the rendered SFX/MUSIC lines use the declared
+  `sound.description`, so describe each sound once there rather than per cue.
+- `{slug}.md` — the **rendered** producer script (a deterministic projection via `render.mjs`, NOT
+  hand-written): a Cast list (name + bio), then cues in order — narration as prose, dialogue as
+  **Name:** lines (with `direction` + any `say_as`), sfx/music as `> [SFX: …]` / `> [MUSIC: …]` from
+  the declared sound. This is what gets reviewed + published.
 - `{slug}.review.json` — `content-review` sidecar (`content_type: audio-story`).
 
 ## Workflow
@@ -65,7 +68,10 @@ language: string         # default "en"
 3. **Gate it:** `node "${CLAUDE_PLUGIN_ROOT}"/scripts/check-audio-story.mjs projects/{slug}/audio/{lang}/{slug}.audio.json`.
    Fix until it exits 0 — it pinpoints an off-cast voice, a dangling sound, a cold-open, runtime
    drift, or any un-marked TTS-hostile token. Also `node "${CLAUDE_PLUGIN_ROOT}"/scripts/validate-sidecar.mjs {slug}.audio.json`.
-4. **Render to `{slug}.md`** from the cue list, faithfully — don't change wording the gate measured.
+4. **Render to `{slug}.md`:** `node "${CLAUDE_PLUGIN_ROOT}"/scripts/render.mjs projects/{slug}/audio/{lang}/{slug}.audio.json --write`
+   — never hand-assemble the script (it would drift from the cue list the gate measured). Give each
+   voice a `bio` for the Cast list; the renderer projects the cast, the ordered cues, directions,
+   say_as notes, and the declared sound descriptions.
 5. **Review:** run `content-review` → `{slug}.review.json` (`content_type: audio-story`, metadata
    title/description/tags, `monetization` as appropriate).
 6. **Publish (optional):** via `publish-content` (`check-prepublish.mjs`).

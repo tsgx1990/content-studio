@@ -45,14 +45,17 @@ language: string         # default "en"
 
 ## Outputs (under projects/{slug}/game/{lang}/)
 
-- `{slug}.game.json` — the **state machine** (source of truth): `game_id`, `start`,
+- `{slug}.game.json` — the **state machine** (source of truth): `game_id`, `start`, optional `goal`,
   `flags[]` (`{id, initial?, label?}`), `items[]` (`{id, label?}`), and `scenes[]` where each scene
-  has `id`, `text`, optional `outcome` (`win`/`lose`/`neutral`) / `ending`, and `choices[]`. Each
-  choice is `{ label, target }` plus optional availability (`requires_flags`/`requires_items`) and
-  effects (`set_flags`/`add_items`/`remove_items`).
-- `{slug}.md` — the **rendered** playable page: an anchored section per scene
-  (`## … {#scene-id}`), choices as in-page links with their gates/effects noted, win/lose endings
-  marked. This is what gets reviewed + published.
+  has `id`, optional `title` (its heading), `text`, optional `outcome` (`win`/`lose`/`neutral`) /
+  `ending`, and `choices[]`. Each choice is `{ label, target }` plus optional availability
+  (`requires_flags`/`requires_items`) and effects (`set_flags`/`add_items`/`remove_items`). The flag/
+  item `label`s are what the rendered choice annotations read (`needs <label>` / `take <label>` /
+  `learn <label>`) — keep them short.
+- `{slug}.md` — the **rendered** playable page (a deterministic projection via `render.mjs`, NOT
+  hand-written): an anchored section per scene (`## title {#scene-id}`), choices as in-page links
+  annotated with their gates/effects (`needs/take/learn`), win/lose endings marked, and a How-to-play
+  header derived from the state. This is what gets reviewed + published.
 - `{slug}.review.json` — `content-review` sidecar (`content_type: game-story`).
 
 ## Workflow
@@ -66,10 +69,11 @@ language: string         # default "en"
    Fix until it exits 0 — it pinpoints any unreachable scene, unwinnable goal, softlock, or
    unobtainable requirement. Also `node "${CLAUDE_PLUGIN_ROOT}"/scripts/validate-sidecar.mjs {slug}.game.json` for the
    schema alone.
-4. **Render to `{slug}.md`** from the state machine: title, then one anchored section per scene in
-   reading order (start first), choices as `- [label](#target)` links annotated with their
-   requirement/effect (e.g. *needs the brass key* / *take the key*), endings labelled
-   "**You win.**" / "**You lose.**". Keep prose faithful to the scene `text`.
+4. **Render to `{slug}.md`:** `node "${CLAUDE_PLUGIN_ROOT}"/scripts/render.mjs projects/{slug}/game/{lang}/{slug}.game.json --write`
+   — never hand-assemble the page (it would drift from the state machine the gate trusts). The renderer
+   projects the scene headings (`scene.title`, falling back to id), the choice links + their
+   `needs/take/learn` annotations (from the flag/item labels), the win/lose markers, and a derived
+   How-to-play header. Give each scene a `title` and keep flag/item `label`s short for clean annotations.
 5. **Review:** run `content-review` → `{slug}.review.json` (`content_type: game-story`, metadata
    title/description/tags, `monetization` as appropriate).
 6. **Publish (optional):** via `publish-content` (`check-prepublish.mjs`). Confirm the target site

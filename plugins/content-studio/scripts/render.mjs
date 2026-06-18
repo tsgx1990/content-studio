@@ -15,11 +15,11 @@
  *   .drama.json   → 微短剧 script preview  (synopsis / episodes / role-tagged beats / cliffhangers)
  *   .prose.json   → prose card            (title / optional summary / body / tags)
  *   .if.json      → interactive fiction   (anchored scene sections + in-page choice links; node.title)
+ *   .game.json    → stateful choice game  (anchored scenes + choice links w/ needs/take/learn; win/lose)
+ *   .audio.json   → audio producer script (cast w/ bios + ordered narration/dialogue/sfx/music cues)
  *
  * NOT rendered (their committed .md carries prose that is NOT in the JSON — author by hand):
- *   .game.json             — scene *titles* are not in the JSON
  *   .spec.json             — the children's-story prose is not in the JSON (spec = constraints only)
- *   .audio.json            — the Cast bios differ from the per-voice tts_voice field
  *
  * Default: print the .md to stdout. `--write`: write the sibling .md (basename + ".md").
  * Exit 0 = rendered. Exit 2 = bad usage / unsupported type.
@@ -161,10 +161,104 @@ function renderIF(s) {
   return blocks.join("\n\n") + "\n";
 }
 
+const GAME_OUTCOME = { win: "**You win.**", lose: "**You lose.**", neutral: "**The end.**" };
+
+function renderGame(g) {
+  const scenes = Array.isArray(g.scenes) ? g.scenes : [];
+  const flags = Array.isArray(g.flags) ? g.flags : [];
+  const items = Array.isArray(g.items) ? g.items : [];
+  const flagLabel = new Map(flags.map((f) => [f.id, f.label || f.id]));
+  const itemLabel = new Map(items.map((i) => [i.id, i.label || i.id]));
+  const titleOf = (s) => s.title || s.id;
+  const isTerminal = (s) => !!s.outcome || s.ending === true || !(Array.isArray(s.choices) && s.choices.length);
+  const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
+  const startTitle = titleOf(scenes.find((s) => s.id === g.start) || { id: g.start });
+
+  // a choice's display annotation, derived from its requirements (needs) + effects (learn/take), in
+  // that order — the same human shorthand the hand-authored page used, now sourced from flag/item labels.
+  const annotate = (c) => {
+    const a = [];
+    for (const r of (c.requires_flags || [])) a.push(`needs ${flagLabel.get(r.id) || r.id}`);
+    for (const it of (c.requires_items || [])) a.push(`needs ${itemLabel.get(it) || it}`);
+    for (const f of (c.set_flags || [])) a.push(`learn ${flagLabel.get(f.id) || f.id}`);
+    for (const it of (c.add_items || [])) a.push(`take ${itemLabel.get(it) || it}`);
+    return a.length ? ` *(${a.join(" — ")})*` : "";
+  };
+
+  const stateDesc = [flags.length && plural(flags.length, "flag"), items.length && plural(items.length, "item")].filter(Boolean).join(", ") || "no state";
+  const goalPart = g.goal ? ` **Goal:** ${g.goal}.` : "";
+  const blocks = [
+    `# ${g.title}`,
+    `*A choose-your-path **game** · rendered from \`${g.game_id}.game.json\`. State (${stateDesc}) and ` +
+      `winnability are enforced by the game-story gate: every choice and item resolves, the exit is ` +
+      `reachable, and there is no way to get permanently stuck.${goalPart}*`,
+  ];
+  if (flags.length || items.length) {
+    blocks.push(
+      `> **How to play:** start at *${startTitle}*, follow the link under each choice. Some choices only ` +
+      `work once you carry the right thing — those are marked *(needs …)*. Items and clues you pick up ` +
+      `are marked *(take …)* / *(learn …)*.`
+    );
+  }
+  for (const s of scenes) {
+    const head = `## ${titleOf(s)} {#${s.id}}`;
+    if (isTerminal(s)) {
+      blocks.push(`${head}\n\n${s.text}\n\n${GAME_OUTCOME[s.outcome] || "**The end.**"}`);
+    } else {
+      const choices = s.choices.map((c) => `- [${c.label}](#${c.target})${annotate(c)}`).join("\n");
+      blocks.push(`${head}\n\n${s.text}\n\n${choices}`);
+    }
+  }
+  return blocks.join("\n\n") + "\n";
+}
+
+function renderAudio(a) {
+  const voices = Array.isArray(a.voices) ? a.voices : [];
+  const sounds = Array.isArray(a.sounds) ? a.sounds : [];
+  const cues = Array.isArray(a.cues) ? a.cues : [];
+  const voiceName = new Map(voices.map((v) => [v.id, v.name || v.id]));
+  const soundDesc = new Map(sounds.map((s) => [s.id, s.description || s.id]));
+  const t = a.target_seconds || 0;
+  const mmss = `${Math.floor(t / 60)}m ${t % 60}s`;
+
+  const blocks = [
+    `# ${a.title}`,
+    `*An audio story · rendered from \`${a.audio_id}.audio.json\`. Every speaking part resolves to a ` +
+      `declared voice and every sound to a declared cue; the opening orients the listener, the runtime ` +
+      `sits within tolerance of the ${t}-second target, and every TTS-hostile token carries a ` +
+      `\`say_as\` pronunciation — all enforced by the audio-story gate. **Target runtime:** ~${mmss}.*`,
+    `> **Production notes:** narration is spoken by the Narrator voice; **Name:** lines are spoken by ` +
+      `that character; \`> [SFX]\` / \`> [MUSIC]\` are sound cues, not spoken. Pronunciation overrides ` +
+      `are noted in *(say-as: …)* — feed them to the TTS engine as SSML \`<say-as>\` (or speak the alias).`,
+    `## Cast`,
+    voices.map((v) => `- **${voiceName.get(v.id)}**${v.bio ? ` — ${v.bio}` : ""}`).join("\n"),
+    `## Script`,
+  ];
+  for (const c of cues) {
+    if (c.type === "narration") {
+      blocks.push(c.text || "");
+    } else if (c.type === "dialogue") {
+      const dir = c.direction ? ` *(${c.direction})*` : "";
+      let block = `**${voiceName.get(c.voice) || c.voice}:**${dir} ${c.text || ""}`;
+      if (Array.isArray(c.say_as) && c.say_as.length) {
+        const sa = c.say_as.map((s) => `"${s.text}" → ${s.as}${s.alias ? `, "${s.alias}"` : ""}`).join("; ");
+        block += `\n*(say-as: ${sa})*`;
+      }
+      blocks.push(block);
+    } else if (c.type === "sfx" || c.type === "music") {
+      const dur = typeof c.seconds === "number" ? ` — ${c.seconds}s` : "";
+      blocks.push(`> [${c.type === "sfx" ? "SFX" : "MUSIC"}: ${soundDesc.get(c.sound) || c.sound}${dur}]`);
+    }
+  }
+  return blocks.join("\n\n") + "\n";
+}
+
 const RENDERERS = [
   [/\.note\.json$/i, renderNote],
   [/\.prose\.json$/i, renderProse],
   [/\.if\.json$/i, renderIF],
+  [/\.game\.json$/i, renderGame],
+  [/\.audio\.json$/i, renderAudio],
   [/\.script\.json$/i, renderScript],
   [/\.lesson\.json$/i, renderLesson],
   [/\.drama\.json$/i, renderDrama],
@@ -172,7 +266,7 @@ const RENDERERS = [
 
 const match = RENDERERS.find(([re]) => re.test(srcPath));
 if (!match) {
-  console.error(`✖ no renderer for ${basename(srcPath)} — supported: .note/.prose/.if/.script/.lesson/.drama.json (see header for why other types are author-by-hand)`);
+  console.error(`✖ no renderer for ${basename(srcPath)} — supported: .note/.prose/.if/.game/.audio/.script/.lesson/.drama.json (see header for why other types are author-by-hand)`);
   process.exit(2);
 }
 
