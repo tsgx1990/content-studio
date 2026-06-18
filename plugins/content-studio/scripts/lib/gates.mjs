@@ -40,6 +40,7 @@ export const GATE_BY_SUFFIX = [
   { suffix: /\.lesson\.json$/i, script: "check-graded-reader.mjs", section: "english-learning stories (graded-reader gate)", label: "graded-reader" },
   { suffix: /\.game\.json$/i,   script: "check-game-story.mjs",    section: "game stories (game-story gate)",                label: "game-story" },
   { suffix: /\.audio\.json$/i,  script: "check-audio-story.mjs",   section: "audio stories (audio-story gate)",              label: "audio-story" },
+  { suffix: /\.print\.json$/i,  script: "check-print-text.mjs",    section: "print artifacts (print-text gate)",             label: "print-text" },
 ];
 
 /** The schema (repo-root-relative path) for a file, or null if none applies. */

@@ -93,8 +93,16 @@ if (articles.length) {
 //      Stale year => advisory ⚠ (doesn't fail health). A cited 位次 that has drifted off its
 //      *.data.json source => real failure. Undeclared files are silent (not gated).
 {
+  // gate any .md, plus any JSON source that opts in with a "data_freshness" block (a rendered type —
+  // e.g. an xhs *.note.json — declares it in the JSON, since its .md is a projection that can't carry
+  // the comment). check-freshness reads either shape; undeclared files come back declared:false.
+  const declares = (f) => {
+    if (/\.md$/i.test(f)) return true;
+    if (!/\.json$/i.test(f)) return false;
+    try { return readFileSync(f, "utf8").includes('"data_freshness"'); } catch { return false; }
+  };
   const declared = [];
-  for (const f of files.filter((f) => /\.md$/i.test(f))) {
+  for (const f of files.filter(declares)) {
     let out;
     try { out = execFileSync("node", [resolve(SCRIPTS, "check-freshness.mjs"), f, "--json"], { stdio: "pipe" }).toString(); }
     catch (e) { out = (e.stdout || "").toString(); }
@@ -174,7 +182,7 @@ for (const { suffix, script, section } of GATE_BY_SUFFIX) {
 
 // 3. fixture self-tests --------------------------------------------------------
 console.log("self-tests:");
-for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs", "test-roots.mjs", "test-fs.mjs", "test-prose.mjs"]) {
+for (const t of ["test-gate.mjs", "test-hooks.mjs", "test-continuity.mjs", "test-chapter-context.mjs", "test-readability.mjs", "test-storygraph.mjs", "test-script.mjs", "test-xhsnote.mjs", "test-short-drama.mjs", "test-graded-reader.mjs", "test-game-story.mjs", "test-audio-story.mjs", "test-topic-feedback.mjs", "test-ai-tells.mjs", "test-compliance.mjs", "test-render.mjs", "test-freshness.mjs", "test-batch.mjs", "test-secrets.mjs", "test-roots.mjs", "test-fs.mjs", "test-prose.mjs", "test-print-text.mjs"]) {
   try {
     execFileSync("node", [resolve(SCRIPTS, t)], { stdio: "pipe" });
     ok(t);
